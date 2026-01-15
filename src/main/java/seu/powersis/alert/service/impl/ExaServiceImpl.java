@@ -244,4 +244,70 @@ public class ExaServiceImpl implements ExaService {
         LocalDateTime dt = LocalDateTime.parse(t, f);
         return dt.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
+
+    @Override
+    public List<Map<String, Object>> getSinglePointHistory(
+            String pointName,
+            String st,
+            String et,
+            Integer stepSeconds
+    ) {
+        // 复用现有的 getHistory 方法
+        return getHistory(pointName, null, st, et, stepSeconds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMultiPointsHistory(
+            List<String> pointNames,
+            String st,
+            String et,
+            Integer stepSeconds
+    ) {
+        if (pointNames == null || pointNames.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // 获取每个测点的历史数据
+        List<List<Map<String, Object>>> allPointsData = new ArrayList<>();
+        for (String pointName : pointNames) {
+            List<Map<String, Object>> pointHistory = getSinglePointHistory(pointName, st, et, stepSeconds);
+            allPointsData.add(pointHistory);
+        }
+
+        // 如果第一个测点没有数据，返回空
+        if (allPointsData.isEmpty() || allPointsData.get(0).isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // 以第一个测点的时间轴为基准，合并所有测点数据
+        List<Map<String, Object>> firstPointData = allPointsData.get(0);
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        for (int i = 0; i < firstPointData.size(); i++) {
+            Map<String, Object> row = new HashMap<>();
+            String time = (String) firstPointData.get(i).get("time");
+            row.put("time", time);
+
+            // 收集所有测点在这个时间点的值
+            List<Double> values = new ArrayList<>();
+            for (int j = 0; j < pointNames.size(); j++) {
+                List<Map<String, Object>> pointData = allPointsData.get(j);
+                if (i < pointData.size()) {
+                    Object val = pointData.get(i).get("value");
+                    if (val != null) {
+                        values.add(((Number) val).doubleValue());
+                    } else {
+                        values.add(null);
+                    }
+                } else {
+                    values.add(null);
+                }
+            }
+            row.put("values", values);
+            result.add(row);
+        }
+
+        log.info("【EXA多测点】成功获取 {} 个测点的 {} 个时间点数据", pointNames.size(), result.size());
+        return result;
+    }
 }

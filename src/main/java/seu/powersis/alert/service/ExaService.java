@@ -29,5 +29,33 @@ public interface ExaService {
             Integer stepSeconds
     );
 
+    /**
+     * 获取单个测点的历史数据
+     * @param pointName 测点名称
+     * @param st 开始时间
+     * @param et 结束时间
+     * @param stepSeconds 采样间隔（秒）
+     * @return 历史数据列表 [{time, value}, ...]
+     */
+    List<Map<String, Object>> getSinglePointHistory(
+            String pointName,
+            String st,
+            String et,
+            Integer stepSeconds
+    );
 
+    /**
+     * 获取多个测点的历史数据，按时间对齐
+     * @param pointNames 测点名称列表
+     * @param st 开始时间
+     * @param et 结束时间
+     * @param stepSeconds 采样间隔（秒）
+     * @return 历史数据列表 [{time, values: [v1, v2, ...]}, ...]
+     */
+    List<Map<String, Object>> getMultiPointsHistory(
+            List<String> pointNames,
+            String st,
+            String et,
+            Integer stepSeconds
+    );
 }

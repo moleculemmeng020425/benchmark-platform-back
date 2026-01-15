@@ -52,6 +52,24 @@ public class BenchmarkHistoryServiceImpl extends ServiceImpl<BenchmarkHistoryMap
                 .map(item -> new BenchmarkHistoryVO(item.getStarttime(), item.getTargetvalue()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Double getOptimalValueByBId(Integer modelId, String bId, String type) {
+        if (modelId == null || bId == null || bId.trim().isEmpty()) {
+            return null;
+        }
+
+        LambdaQueryWrapper<BenchmarkHistory> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+                .eq(BenchmarkHistory::getModelId, modelId)
+                .eq(BenchmarkHistory::getBId, bId)
+                .eq(type != null && !type.isEmpty(), BenchmarkHistory::getType, type)
+                .orderByDesc(BenchmarkHistory::getStarttime)  // 取最新的记录
+                .last("LIMIT 1");
+
+        BenchmarkHistory record = this.getOne(queryWrapper);
+        return record != null ? record.getTargetvalue() : null;
+    }
 }
 
 

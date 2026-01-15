@@ -11,11 +11,15 @@ import seu.powersis.alert.dao.entity.ModelView;
 import seu.powersis.alert.dao.service.BenchmarkHistoryService;
 import seu.powersis.alert.dao.service.ModelViewService;
 import seu.powersis.alert.param.BenchmarkHistoryQuery;
+import seu.powersis.alert.service.ExaService;
 import seu.powersis.alert.vo.BenchmarkHistoryVO;
 import seu.powersis.alert.vo.ModelInfoVO;
+import seu.powersis.alert.vo.PointVO;
 
-import java.util.Collections;
-import java.util.List;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -25,16 +29,18 @@ public class BenchmarkHistoryController {
 
     private final BenchmarkHistoryService benchmarkHistoryService;
     private final ModelViewService modelViewService;
+    private final ExaService exaService;
 
     /**
-     * 历史最优值趋势（来自本地 SQL：benchmark_history 表）
+     * 历史最优值趋势（正确逻辑）
      *
-     * query: modelId 必填；st/et 选填
-     * 返回: List<BenchmarkHistoryVO>(time=starttime, value=targetvalue)
-     * 
-     * 修复：根据模型的 marktype 筛选对应类型的数据
-     * - marktype='min' → 查询 type='min' 的数据（目标值越低越好）
-     * - marktype='max' → 查询 type='max' 的数据（目标值越高越好）
+     * 逻辑说明：
+     * 1. 获取模型配置（边界参数定义）
+     * 2. 从 EXA 获取边界参数的历史数据
+     * 3. 对于每个时间点：
+     *    - 根据边界参数值计算 B_ID（网格坐标）
+     *    - 在 benchmark_history 表中查找该 B_ID 对应的最优值
+     * 4. 返回 (time, optimalValue) 列表
      */
     @GetMapping("")
     public Result<List<BenchmarkHistoryVO>> getHistory(BenchmarkHistoryQuery query) {
@@ -45,41 +51,176 @@ public class BenchmarkHistoryController {
             return Result.success(Collections.emptyList());
         }
 
-        // 1) 获取模型的寻优逻辑类型（优化方向）
-        String marktype = "min"; // 默认目标值越低越好
+        log.info("【历史最优值趋势】开始查询，modelId={}, st={}, et={}",
+                 query.getModelId(), query.getSt(), query.getEt());
+
+        // 1) 获取模型配置
+        ModelInfoVO modelInfoVO = null;
+        String optimalType = "min"; // 默认寻优逻辑
         try {
             ModelView modelView = modelViewService.getById(query.getModelId());
             if (modelView != null && modelView.getModelInfo() != null) {
-                ModelInfoVO modelInfoVO = JSON.parseObject(modelView.getModelInfo(), ModelInfoVO.class);
-                if (modelInfoVO != null) {
-                    // 优先从 movingWindows.optimalType 读取（新字段）
-                    if (modelInfoVO.getMovingWindows() != null
-                        && modelInfoVO.getMovingWindows().getOptimalType() != null
-                        && !modelInfoVO.getMovingWindows().getOptimalType().trim().isEmpty()) {
-                        marktype = modelInfoVO.getMovingWindows().getOptimalType().trim().toLowerCase();
-                    }
-                    // 兼容旧数据：如果 optimalType 没有，尝试从 targetParameter.marktype 读取
-                    else if (modelInfoVO.getTargetParameter() != null
-                        && modelInfoVO.getTargetParameter().getMarktype() != null
-                        && !modelInfoVO.getTargetParameter().getMarktype().trim().isEmpty()) {
-                        marktype = modelInfoVO.getTargetParameter().getMarktype().trim().toLowerCase();
-                    }
+                modelInfoVO = JSON.parseObject(modelView.getModelInfo(), ModelInfoVO.class);
+                if (modelInfoVO != null && modelInfoVO.getMovingWindows() != null
+                        && modelInfoVO.getMovingWindows().getOptimalType() != null) {
+                    optimalType = modelInfoVO.getMovingWindows().getOptimalType().trim().toLowerCase();
                 }
             }
         } catch (Exception e) {
-            log.warn("【历史最优值趋势】获取模型寻优逻辑失败，使用默认值 min", e);
-        }
-
-        // 2) 走 SQL（benchmark_history），只查询对应 type 的数据
-        List<BenchmarkHistoryVO> out;
-        try {
-            out = benchmarkHistoryService.getHistoryByType(query, marktype);
-        } catch (Exception e) {
-            log.error("【历史最优值趋势】SQL 查询失败，query={}, marktype={}", query, marktype, e);
+            log.error("【历史最优值趋势】获取模型配置失败", e);
             return Result.success(Collections.emptyList());
         }
 
-        // 3) 返回（允许空列表）
-        return Result.success(out);
+        if (modelInfoVO == null) {
+            log.warn("【历史最优值趋势】模型配置为空，modelId={}", query.getModelId());
+            return Result.success(Collections.emptyList());
+        }
+
+        // 2) 获取边界参数配置
+        List<PointVO> boundaryParams = modelInfoVO.getBoundaryParameter();
+        if (boundaryParams == null || boundaryParams.isEmpty()) {
+            log.warn("【历史最优值趋势】模型没有边界参数配置，modelId={}", query.getModelId());
+            // 如果没有边界参数，回退到旧逻辑
+            return Result.success(benchmarkHistoryService.getHistoryByType(query, optimalType));
+        }
+
+        // 3) 提取边界参数的测点号
+        List<String> boundaryPointNames = boundaryParams.stream()
+                .map(PointVO::getTargetPoint)
+                .filter(p -> p != null && !p.trim().isEmpty())
+                .collect(Collectors.toList());
+
+        if (boundaryPointNames.isEmpty()) {
+            log.warn("【历史最优值趋势】边界参数测点号为空，modelId={}", query.getModelId());
+            return Result.success(benchmarkHistoryService.getHistoryByType(query, optimalType));
+        }
+
+        log.info("【历史最优值趋势】边界参数测点: {}", boundaryPointNames);
+
+        // 4) 格式化时间
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String stStr = query.getSt() != null ? sdf.format(query.getSt()) : null;
+        String etStr = query.getEt() != null ? sdf.format(query.getEt()) : null;
+
+        // 5) 从 EXA 获取边界参数的历史数据
+        Integer samplingInterval = 60; // 默认采样间隔 60 秒
+        if (modelInfoVO.getMovingWindows() != null && modelInfoVO.getMovingWindows().getSamplingInterval() != null) {
+            samplingInterval = modelInfoVO.getMovingWindows().getSamplingInterval();
+        }
+
+        List<Map<String, Object>> boundaryHistory;
+        try {
+            boundaryHistory = exaService.getMultiPointsHistory(boundaryPointNames, stStr, etStr, samplingInterval);
+        } catch (Exception e) {
+            log.error("【历史最优值趋势】获取边界参数历史数据失败", e);
+            return Result.success(Collections.emptyList());
+        }
+
+        if (boundaryHistory == null || boundaryHistory.isEmpty()) {
+            log.warn("【历史最优值趋势】边界参数历史数据为空");
+            return Result.success(Collections.emptyList());
+        }
+
+        log.info("【历史最优值趋势】获取到 {} 个时间点的边界参数数据", boundaryHistory.size());
+
+        // 6) 对于每个时间点，计算 B_ID 并查询最优值
+        List<BenchmarkHistoryVO> result = new ArrayList<>();
+        Map<String, Double> bidCache = new HashMap<>(); // 缓存 B_ID -> 最优值，避免重复查询
+
+        for (Map<String, Object> row : boundaryHistory) {
+            String timeStr = (String) row.get("time");
+            @SuppressWarnings("unchecked")
+            List<Double> values = (List<Double>) row.get("values");
+
+            if (timeStr == null || values == null || values.size() != boundaryParams.size()) {
+                continue;
+            }
+
+            // 计算 B_ID
+            String bId = calculateBId(values, boundaryParams);
+            if (bId == null) {
+                continue;
+            }
+
+            // 查询该 B_ID 对应的最优值（使用缓存）
+            Double optimalValue;
+            if (bidCache.containsKey(bId)) {
+                optimalValue = bidCache.get(bId);
+            } else {
+                optimalValue = benchmarkHistoryService.getOptimalValueByBId(query.getModelId(), bId, optimalType);
+                bidCache.put(bId, optimalValue);
+            }
+
+            // 如果有最优值，添加到结果
+            if (optimalValue != null) {
+                try {
+                    Date time = sdf.parse(timeStr);
+                    result.add(new BenchmarkHistoryVO(time, optimalValue));
+                } catch (Exception e) {
+                    log.warn("【历史最优值趋势】解析时间失败: {}", timeStr);
+                }
+            }
+        }
+
+        log.info("【历史最优值趋势】查询完成，返回 {} 条数据，使用了 {} 个不同的 B_ID",
+                 result.size(), bidCache.size());
+
+        return Result.success(result);
+    }
+
+    /**
+     * 根据边界参数值计算 B_ID
+     *
+     * B_ID 格式: B-{id1}-{id2}-...
+     * 每个 id = 1 + floor((value - lowerlimit) / ((upperlimit - lowerlimit) / gridNumber))
+     *
+     * @param values 边界参数值列表
+     * @param boundaryParams 边界参数配置列表
+     * @return B_ID 字符串，如 "B-3-9"
+     */
+    private String calculateBId(List<Double> values, List<PointVO> boundaryParams) {
+        if (values == null || boundaryParams == null || values.size() != boundaryParams.size()) {
+            return null;
+        }
+
+        StringBuilder bId = new StringBuilder("B");
+
+        for (int i = 0; i < values.size(); i++) {
+            Double value = values.get(i);
+            PointVO param = boundaryParams.get(i);
+
+            if (value == null || param == null) {
+                return null;
+            }
+
+            BigDecimal upperLimit = param.getUpperlimit();
+            BigDecimal lowerLimit = param.getLowerlimit();
+            Integer gridNumber = param.getGridNumber();
+
+            if (upperLimit == null || lowerLimit == null || gridNumber == null || gridNumber <= 0) {
+                return null;
+            }
+
+            // 检查值是否在有效范围内
+            double upper = upperLimit.doubleValue();
+            double lower = lowerLimit.doubleValue();
+
+            if (value < lower || value > upper) {
+                // 值超出范围，跳过这个时间点
+                return null;
+            }
+
+            // 计算网格 ID: 1 + floor((value - lower) / ((upper - lower) / gridNumber))
+            double step = (upper - lower) / gridNumber;
+            int gridId = 1 + (int) Math.floor((value - lower) / step);
+
+            // 确保 gridId 在有效范围内
+            if (gridId < 1) gridId = 1;
+            if (gridId > gridNumber) gridId = gridNumber;
+
+            bId.append("-").append(gridId);
+        }
+
+        return bId.toString();
     }
 }
