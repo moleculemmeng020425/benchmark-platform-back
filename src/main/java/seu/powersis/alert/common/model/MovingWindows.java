@@ -24,4 +24,12 @@ public class MovingWindows {
 
     @JsonProperty("moving_speed")
     private BigDecimal movingSpeed;
+
+    /**
+     * 寻优逻辑类型
+     * min: 寻找最小值作为最优值（如：煤耗、能耗等越小越好的指标）
+     * max: 寻找最大值作为最优值（如：效率等越大越好的指标）
+     */
+    @JsonProperty("optimal_type")
+    private String optimalType;
 }
