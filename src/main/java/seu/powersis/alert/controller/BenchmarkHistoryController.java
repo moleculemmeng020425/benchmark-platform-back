@@ -45,19 +45,29 @@ public class BenchmarkHistoryController {
             return Result.success(Collections.emptyList());
         }
 
-        // 1) 获取模型的 marktype（优化方向）
+        // 1) 获取模型的寻优逻辑类型（优化方向）
         String marktype = "min"; // 默认目标值越低越好
         try {
             ModelView modelView = modelViewService.getById(query.getModelId());
             if (modelView != null && modelView.getModelInfo() != null) {
                 ModelInfoVO modelInfoVO = JSON.parseObject(modelView.getModelInfo(), ModelInfoVO.class);
-                if (modelInfoVO != null && modelInfoVO.getTargetParameter() != null 
-                    && modelInfoVO.getTargetParameter().getMarktype() != null) {
-                    marktype = modelInfoVO.getTargetParameter().getMarktype().trim().toLowerCase();
+                if (modelInfoVO != null) {
+                    // 优先从 movingWindows.optimalType 读取（新字段）
+                    if (modelInfoVO.getMovingWindows() != null
+                        && modelInfoVO.getMovingWindows().getOptimalType() != null
+                        && !modelInfoVO.getMovingWindows().getOptimalType().trim().isEmpty()) {
+                        marktype = modelInfoVO.getMovingWindows().getOptimalType().trim().toLowerCase();
+                    }
+                    // 兼容旧数据：如果 optimalType 没有，尝试从 targetParameter.marktype 读取
+                    else if (modelInfoVO.getTargetParameter() != null
+                        && modelInfoVO.getTargetParameter().getMarktype() != null
+                        && !modelInfoVO.getTargetParameter().getMarktype().trim().isEmpty()) {
+                        marktype = modelInfoVO.getTargetParameter().getMarktype().trim().toLowerCase();
+                    }
                 }
             }
         } catch (Exception e) {
-            log.warn("【历史最优值趋势】获取模型 marktype 失败，使用默认值 min", e);
+            log.warn("【历史最优值趋势】获取模型寻优逻辑失败，使用默认值 min", e);
         }
 
         // 2) 走 SQL（benchmark_history），只查询对应 type 的数据
