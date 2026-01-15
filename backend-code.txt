@@ -1,0 +1,5409 @@
+﻿
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\common\enums\Algorithm.java =====
+
+package seu.powersis.alert.common.enums;
+
+import lombok.AllArgsConstructor;
+
+import java.util.Objects;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 14:07
+ */
+@AllArgsConstructor
+public enum Algorithm {
+    /**
+     * 妯″瀷绠楁硶鏋氫妇
+     */
+    ERROR(-1),
+    PCA(0),
+    ANN(1);
+
+    public final Integer code;
+
+
+    public static Algorithm of(Integer code) {
+        for (Algorithm algorithm : values()) {
+            if (Objects.equals(algorithm.code, code)) {
+                return algorithm;
+            }
+        }
+        return ERROR;
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\common\enums\ModelStatus.java =====
+
+package seu.powersis.alert.common.enums;
+
+import lombok.AllArgsConstructor;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 13:48
+ */
+@AllArgsConstructor
+public enum ModelStatus {
+    /**
+     * 妯″瀷鐘舵€?     */
+    TRAINING(0, "璁粌涓?),
+    FINISH(1, "宸蹭笅瑁?);
+
+
+    public final Integer code;
+
+    public final String desc;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\common\enums\ModelTrash.java =====
+
+package seu.powersis.alert.common.enums;
+
+import lombok.AllArgsConstructor;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 13:53
+ */
+@AllArgsConstructor
+public enum ModelTrash {
+    /**
+     * 鍒犻櫎鐘舵€?     */
+    NORMAL(0, "姝ｅ父"),
+    TRASH(1, "宸插垹闄?),
+    ;
+    public final Integer code;
+
+    public final String desc;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\common\enums\ModelVisible.java =====
+
+package seu.powersis.alert.common.enums;
+
+import lombok.AllArgsConstructor;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 14:00
+ */
+@AllArgsConstructor
+public enum ModelVisible {
+    /**
+     * 妯″瀷鍙鐘舵€?     */
+    VISIBLE(1),
+    INVISIBLE(0),
+    ;
+    public final Integer code;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\common\enums\ResultCode.java =====
+
+package seu.powersis.alert.common.enums;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 13:14
+ */
+public enum ResultCode {
+    /**
+     * 鍝嶅簲鐮佹灇涓?     */
+    SUCCESS(0, "鎴愬姛"),
+    FAIL(-1, "澶辫触"),
+    UNAUTHORIZED(401, "鏃犳潈闄?),
+    NOT_FOUND(404, "鎺ュ彛涓嶅瓨鍦?),
+    INTERNAL_SERVER_ERROR(500, "鏈嶅姟鍣ㄥ唴閮ㄩ敊璇?);
+
+    public final int code;
+
+    public final String type;
+
+    ResultCode(int code, String type) {
+        this.code = code;
+        this.type = type;
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\common\model\ExaPoint.java =====
+
+package seu.powersis.alert.common.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-20 20:45
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ExaPoint {
+    /**
+     * 鐐瑰彿
+     */
+    @JsonProperty("ItemName")
+    private String itemName;
+    /**
+     *
+     */
+    @JsonProperty("SerialNumber")
+    private int serialNumber;
+    /**
+     * 缁勫悕
+     */
+    @JsonProperty("GroupName")
+    private String groupName;
+    /**
+     * 绫诲瀷
+     */
+    @JsonProperty("ItemType")
+    private int itemType;
+    /**
+     * 鎻忚堪
+     */
+    @JsonProperty("Descriptor")
+    private String descriptor;
+    /**
+     * 鍗曚綅
+     */
+    @JsonProperty("EngUnits")
+    private String engUnits;
+    /**
+     * 涓婇檺
+     */
+    @JsonProperty("UpperLimit")
+    private Double upperLimit;
+    /**
+     * 涓嬮檺
+     */
+    @JsonProperty("LowerLimit")
+    private Double lowerLimit;
+    /**
+     * 涓婅竟鐣?     */
+    @JsonProperty("LowerBound")
+    private Double lowerBound;
+    /**
+     * 涓嬪彉浠?     */
+    @JsonProperty("UpperBound")
+    private Double upperBound;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\common\model\ModelInfo.java =====
+
+package seu.powersis.alert.common.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 23:02
+ */
+@Data
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class ModelInfo {
+    /**
+     * id
+     */
+    private Integer id;
+    /**
+     * 鍒涘缓浜?     */
+    private String createName;
+    /**
+     * 鍚嶇О
+     */
+    private String modelName;
+
+    @JsonProperty("steady_point")
+    private List<Object> steadyPoint;
+    /**
+     * 婊戝姩绐楀弬鏁?     */
+    @JsonProperty("moving_windows")
+    private MovingWindows movingWindows;
+
+    @JsonProperty("target_parameter")
+    private Point targetParameter;
+
+    @JsonProperty("relation_parameter")
+    private List<Point> relationParameter;
+
+    @JsonProperty("boundary_parameter")
+    private List<Point> boundaryParameter;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\common\model\MovingWindows.java =====
+
+package seu.powersis.alert.common.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-20 11:14
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class MovingWindows {
+    @JsonProperty("window_length")
+    private BigDecimal windowLength;
+
+    @JsonProperty("sampling_interval")
+    private BigDecimal samplingInterval;
+
+    @JsonProperty("moving_speed")
+    private BigDecimal movingSpeed;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\common\model\Point.java =====
+
+package seu.powersis.alert.common.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+
+import java.math.BigDecimal;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 22:48
+ */
+@Data
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class Point {
+    /**
+     * 绯荤粺鍚嶇О
+     */
+    private String systemName;
+
+    /**
+     * 鐩爣鐐瑰彿
+     */
+    @JsonProperty("target_point")
+    private String targetPoint;
+
+    /**
+     * 鎻忚堪
+     */
+    private String description;
+
+    /**
+     * 鍗曚綅
+     */
+    private String unit;
+
+    /**
+     * 绫诲瀷
+     */
+    private String marktype;
+
+    /**
+     * 涓婇檺
+     */
+    private BigDecimal upperlimit;
+
+    /**
+     * 涓嬮檺
+     */
+    private BigDecimal lowerlimit;
+
+    /**
+     * 缃戞牸鏁?     */
+    private Integer gridNumber;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\common\model\Result.java =====
+
+package seu.powersis.alert.common.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import seu.powersis.alert.common.enums.ResultCode;
+
+import java.io.Serializable;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-14 22:49
+ */
+@Data
+@AllArgsConstructor
+public class Result<T> implements Serializable {
+    private int code;
+    private String type;
+    private String message;
+    private T result;
+
+    public static <T> Result<T> success(T data) {
+        return new Result<T>(ResultCode.SUCCESS, "ok", data);
+    }
+
+    public static <T> Result<T> fail(String message) {
+        return new Result<>(ResultCode.FAIL, message, null);
+    }
+
+    public Result(ResultCode code, String message, T result) {
+        this.code = code.code;
+        this.type = code.type;
+        this.message = message;
+        this.result = result;
+    }
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\controller\BenchmarkHistoryController.java =====
+
+package seu.powersis.alert.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import seu.powersis.alert.common.model.Result;
+import seu.powersis.alert.dao.service.BenchmarkHistoryService;
+import seu.powersis.alert.param.BenchmarkHistoryQuery;
+import seu.powersis.alert.vo.BenchmarkHistoryVO;
+
+import java.util.List;
+
+/**
+ * @author Cascade
+ * @version 1.0
+ * @date 2025-12-24
+ */
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/benchmark/history")
+public class BenchmarkHistoryController {
+    private final BenchmarkHistoryService benchmarkHistoryService;
+
+        @GetMapping("")
+    public Result<List<BenchmarkHistoryVO>> getHistory(BenchmarkHistoryQuery query) {
+        List<BenchmarkHistoryVO> history = benchmarkHistoryService.getHistory(query);
+        return Result.success(history);
+    }
+
+}
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\controller\ModelController.java =====
+
+package seu.powersis.alert.controller;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import seu.powersis.alert.common.model.Result;
+import seu.powersis.alert.param.CreateModelInfo;
+import seu.powersis.alert.param.ModelSelectQuery;
+import seu.powersis.alert.service.ModelService;
+import seu.powersis.alert.vo.ModelInfoVO;
+import seu.powersis.alert.vo.ModelSimpleVO;
+
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 13:07
+ */
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/model")
+public class ModelController {
+    private final ModelService modelService;
+
+
+    @GetMapping("/card/list")
+    public Result<List<ModelSimpleVO>> getModelList(ModelSelectQuery query) {
+        List<ModelSimpleVO> modelList = modelService.getModelList(query);
+        return Result.success(modelList);
+    }
+
+    @GetMapping("info/{id}")
+    public Result<ModelInfoVO> getModelInfo(@PathVariable Integer id) {
+        ModelInfoVO modelInfo = modelService.getModelInfo(id);
+        return Result.success(modelInfo);
+    }
+
+    @PostMapping("/")
+    public Result<Integer> saveModel(@RequestBody CreateModelInfo model) {
+        Integer id = modelService.createModel(model);
+        if (Objects.nonNull(id) && id > 0) {
+        return Result.success(id);
+        }
+        return Result.fail("鏂板缓妯″瀷寮傚父");
+    }
+
+    @PatchMapping("/info")
+    public Result<Boolean> updateModelInfo(@RequestBody ModelInfoVO vo) {
+        Boolean b = modelService.updateModelInfo(vo);
+        return Result.success(b);
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\controller\ModelDataController.java =====
+
+package seu.powersis.alert.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import seu.powersis.alert.common.model.Result;
+import seu.powersis.alert.dao.entity.RecalcCfg;
+import seu.powersis.alert.dao.service.RecalcCfgService;
+import seu.powersis.alert.param.ModelDataQuery;
+import seu.powersis.alert.param.TimeRange;
+import seu.powersis.alert.service.ModelDataService;
+import seu.powersis.alert.vo.ModelDataVO;
+
+import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-09-05 22:08
+ */
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/model/data")
+public class ModelDataController {
+    private final ModelDataService modelDataService;
+
+    private final RecalcCfgService recalcCfgService;
+
+    @GetMapping("/{id}")
+    public Result<ModelDataVO> getModelData(@PathVariable Integer id, @Valid ModelDataQuery query) {
+        List<Integer> indexList = Arrays.stream(query.getIndex().split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        ModelDataVO modelData = modelDataService.getModelData(id, query.getType(), indexList,
+                query.getSt(), query.getEt());
+        return Result.success(modelData);
+    }
+
+    @PostMapping("/calculate/{id}")
+    public Result<Boolean> calculate(@PathVariable Integer id, @RequestBody TimeRange timeRange) {
+        RecalcCfg recalcCfg = new RecalcCfg();
+        recalcCfg.setModelId(id);
+        recalcCfg.setInserttime(new Date());
+        recalcCfg.setStarttime(timeRange.getSt());
+        recalcCfg.setEndtime(timeRange.getEt());
+        boolean save = recalcCfgService.save(recalcCfg);
+        return Result.success(save);
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\controller\OptimisticController.java =====
+
+package seu.powersis.alert.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import seu.powersis.alert.common.model.Result;
+import seu.powersis.alert.dao.service.ModelViewService;
+import seu.powersis.alert.param.OptimisticQuery;
+import seu.powersis.alert.vo.OptimisticVO;
+
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2024-07-16 22:08
+ */
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/optimistic")
+public class OptimisticController {
+    private final ModelViewService modelViewService;
+
+    @GetMapping("")
+    public Result<List<OptimisticVO>> getOptimistic(OptimisticQuery query) {
+        List<OptimisticVO> optimistic = modelViewService.getOptimistic(query.getId(), query.getSearch()
+                , query.getSt(), query.getEt());
+        return Result.success(optimistic);
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\controller\SelectController.java =====
+
+package seu.powersis.alert.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import seu.powersis.alert.common.model.Result;
+import seu.powersis.alert.param.SelectQuery;
+import seu.powersis.alert.service.ExaService;
+import seu.powersis.alert.service.SelectService;
+import seu.powersis.alert.vo.OptionItemVO;
+import seu.powersis.alert.vo.PointOptionItemVO;
+import seu.powersis.alert.vo.SelectAllOptionVO;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-16 22:37
+ */
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/select")
+public class SelectController {
+    /**
+     * 鏌ヨ鏉′欢涓嶈兘鍚湁杩欎釜,鍚﹀垯exa浼氭寕鎺?     */
+    private static final String EXA_NOT_SUPPORT_STR = "'";
+    private final SelectService selectService;
+
+    private final ExaService exaService;
+
+    @GetMapping("list")
+    public Result<SelectAllOptionVO> getAllOptions() {
+        SelectAllOptionVO allOptions = selectService.getAllOptions();
+        return Result.success(allOptions);
+    }
+
+    @GetMapping("/system/options")
+    public Result<List<OptionItemVO>> getTypeOptions(@Valid SelectQuery query) {
+        List<OptionItemVO> systemOptions = selectService.getSystemOptions(query);
+        return Result.success(systemOptions);
+    }
+
+    @GetMapping("/point/options")
+    public Result<List<PointOptionItemVO>> getPointOptions(String keyword) {
+        List<PointOptionItemVO> pointOptionList = new ArrayList<>();
+        if (StringUtils.hasText(keyword) && !keyword.contains(EXA_NOT_SUPPORT_STR)) {
+            pointOptionList = exaService.getPointOptionList(keyword);
+        }
+        return Result.success(pointOptionList);
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\controller\TeachController.java =====
+
+package seu.powersis.alert.controller;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import seu.powersis.alert.common.model.Result;
+import seu.powersis.alert.dao.entity.TeachTest;
+import seu.powersis.alert.dao.service.TeachTestService;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2024-07-12 19:12
+ */
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+public class TeachController {
+    private final TeachTestService teachTestService;
+
+    @GetMapping("/helloworld/{name}")
+    public Result<String> helloWorld(@PathVariable String name) {
+        return Result.success("浣犲ソ " + name);
+    }
+
+    @PostMapping("/update")
+    public Result<String> update() {
+        return Result.success("鏇存柊鎴愬姛");
+    }
+
+    @GetMapping("/{id}")
+    private Result<TeachTest> getOne(@PathVariable Long id) {
+        TeachTest teachTest = teachTestService.getById(id);
+        return Result.success(teachTest);
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\controller\TestController.java =====
+
+package seu.powersis.alert.controller;
+
+import com.alibaba.fastjson.JSON;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import seu.powersis.alert.common.model.Result;
+import seu.powersis.alert.vo.UserInfo;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-14 22:30
+ */
+@RestController
+public class TestController {
+
+    @GetMapping("/api/test")
+    public String test() {
+        return "test";
+    }
+
+    @GetMapping("/api/getUserInfo")
+    public Result<UserInfo> getUserInfo() {
+        String user = "{\n" +
+                "      userId: '1',\n" +
+                "      username: 'admin',\n" +
+                "      realName: 'Admin',\n" +
+                "      avatar: '',\n" +
+                "      desc: 'manager',\n" +
+                "      password: '123456',\n" +
+                "      token: 'fakeToken1',\n" +
+                "      homePath: '/model/list',\n" +
+                "      roles: [\n" +
+                "        {\n" +
+                "          roleName: 'Super Admin',\n" +
+                "          value: 'super',\n" +
+                "        },\n" +
+                "      ],\n" +
+                "    }";
+        UserInfo userInfo = JSON.parseObject(user, UserInfo.class);
+        return Result.success(userInfo);
+    }
+
+    @PostMapping("/api/login")
+    public Result<UserInfo> login() {
+        String user = "{\n" +
+                "      userId: '1',\n" +
+                "      username: 'admin',\n" +
+                "      realName: 'Admin',\n" +
+                "      avatar: '',\n" +
+                "      desc: 'manager',\n" +
+                "      token: 'fakeToken1',\n" +
+                "      homePath: '/model/list',\n" +
+                "      roles: [\n" +
+                "        {\n" +
+                "          roleName: 'Super Admin',\n" +
+                "          value: 'super',\n" +
+                "        },\n" +
+                "      ],\n" +
+                "    }";
+        UserInfo userInfo = JSON.parseObject(user, UserInfo.class);
+        return Result.success(userInfo);
+    }
+
+    @GetMapping("/basic-api/logout")
+    public Result<String> logout() {
+        return Result.success("鐧诲嚭鎴愬姛");
+    }
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\dto\IndexValueDTO.java =====
+
+package seu.powersis.alert.dao.dto;
+
+import lombok.ToString;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-09-12 22:30
+ */
+@ToString
+public class IndexValueDTO {
+    /**
+     * 绱㈠紩
+     */
+    private String dataIndex;
+    /**
+     * 鍙傛暟涓暟
+     */
+    private Integer number;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\AlarmLevelCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.io.Serializable;
+
+import lombok.Data;
+
+/**
+ * @author 闄堝皬榛? * @TableName alarm_level_cfg
+ */
+@TableName(value = "alarm_level_cfg")
+@Data
+public class AlarmLevelCfg implements Serializable {
+    /**
+     *
+     */
+    private Integer alarmLevel;
+
+    /**
+     *
+     */
+    private String alarmLevelName;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\AlarmTypeCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName alarm_type_cfg
+ */
+@TableName(value ="alarm_type_cfg")
+@Data
+public class AlarmTypeCfg implements Serializable {
+    /**
+     * 
+     */
+    private Integer unitId;
+
+    /**
+     * 
+     */
+    private Integer alarmTypeId;
+
+    /**
+     * 
+     */
+    private String alarmName;
+
+    /**
+     * 
+     */
+    private String alarmThershold;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\AlgorithmCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName algorithm_cfg
+ */
+@TableName(value ="algorithm_cfg")
+@Data
+public class AlgorithmCfg implements Serializable {
+    /**
+     * 
+     */
+    private Integer algorithmId;
+
+    /**
+     * 
+     */
+    private String algorithmName;
+
+    /**
+     * 
+     */
+    private String algorithmShortname;
+
+    /**
+     * 
+     */
+    private String path;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\AreaCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName area_cfg
+ */
+@TableName(value ="area_cfg")
+@Data
+public class AreaCfg implements Serializable {
+    /**
+     * 
+     */
+    private Integer areaId;
+
+    /**
+     * 
+     */
+    private String areaName;
+
+    /**
+     * 
+     */
+    private String areaShortname;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\BenchmarkHistory.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.Date;
+
+/**
+ * @author 闄堝皬榛? * @TableName benchmark_history
+ */
+@Data
+@Slf4j
+@TableName(value = "benchmark_history")
+public class BenchmarkHistory implements Serializable {
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+    /**
+     * 鍞竴缂栧彿
+     */
+    private Integer nno;
+
+    /**
+     * 瀵规爣妯″瀷缂栧彿
+     */
+    private Integer modelId;
+
+    /**
+     * 宸ュ喌缂栧彿
+     */
+    private String bId;
+
+    /**
+     *
+     */
+    private Integer b1Id;
+
+    /**
+     *
+     */
+    private Integer b2Id;
+
+    /**
+     *
+     */
+    private Integer b3Id;
+
+    /**
+     *
+     */
+    private Integer b4Id;
+
+    /**
+     *
+     */
+    private Integer b5Id;
+
+    /**
+     *
+     */
+    private Integer b6Id;
+
+    /**
+     *
+     */
+    private Integer b7Id;
+
+    /**
+     *
+     */
+    private Integer b8Id;
+
+    /**
+     *
+     */
+    private Integer b9Id;
+
+    /**
+     *
+     */
+    private Integer b10Id;
+
+    /**
+     * 璇ュ伐鍐垫牱鏈墍鍦ㄨ捣濮嬫椂闂?     */
+    private Date starttime;
+
+    /**
+     * 璇ュ伐鍐垫牱鏈墍鍦ㄧ粨鏉熸椂闂?     */
+    private Date endtime;
+
+    /**
+     * 璇ュ伐鍐垫牱鏈暟閲?     */
+    private Integer samplenum;
+
+    /**
+     * max/min/avg
+     */
+    private String type;
+
+    /**
+     * 鍗囪礋鑽?闄嶈礋鑽?绋虫€?澶ф尝鍔?     */
+    private String tflag;
+
+    /**
+     * 鐩爣鍙傛暟鍊?     */
+    private Double targetvalue;
+
+    /**
+     *
+     */
+    private Date inserttime;
+
+    /**
+     *
+     */
+    private Double b1;
+
+    /**
+     *
+     */
+    private Double b2;
+
+    /**
+     *
+     */
+    private Double b3;
+
+    /**
+     *
+     */
+    private Double b4;
+
+    /**
+     *
+     */
+    private Double b5;
+
+    /**
+     *
+     */
+    private Double b6;
+
+    /**
+     *
+     */
+    private Double b7;
+
+    /**
+     *
+     */
+    private Double b8;
+
+    /**
+     *
+     */
+    private Double b9;
+
+    /**
+     *
+     */
+    private Double b10;
+
+    /**
+     *
+     */
+    private Double r1;
+
+    /**
+     *
+     */
+    private Double r2;
+
+    /**
+     *
+     */
+    private Double r3;
+
+    /**
+     *
+     */
+    private Double r4;
+
+    /**
+     *
+     */
+    private Double r5;
+
+    /**
+     *
+     */
+    private Double r6;
+
+    /**
+     *
+     */
+    private Double r7;
+
+    /**
+     *
+     */
+    private Double r8;
+
+    /**
+     *
+     */
+    private Double r9;
+
+    /**
+     *
+     */
+    private Double r10;
+
+    /**
+     *
+     */
+    private Double r11;
+
+    /**
+     *
+     */
+    private Double r12;
+
+    /**
+     *
+     */
+    private Double r13;
+
+    /**
+     *
+     */
+    private Double r14;
+
+    /**
+     *
+     */
+    private Double r15;
+
+    /**
+     *
+     */
+    private Double r16;
+
+    /**
+     *
+     */
+    private Double r17;
+
+    /**
+     *
+     */
+    private Double r18;
+
+    /**
+     *
+     */
+    private Double r19;
+
+    /**
+     *
+     */
+    private Double r20;
+
+    /**
+     *
+     */
+    private Double r21;
+
+    /**
+     *
+     */
+    private Double r22;
+
+    /**
+     *
+     */
+    private Double r23;
+
+    /**
+     *
+     */
+    private Double r24;
+
+    /**
+     *
+     */
+    private Double r25;
+
+    /**
+     *
+     */
+    private Double r26;
+
+    /**
+     *
+     */
+    private Double r27;
+
+    /**
+     *
+     */
+    private Double r28;
+
+    /**
+     *
+     */
+    private Double r29;
+
+    /**
+     *
+     */
+    private Double r30;
+
+    /**
+     *
+     */
+    private Double r31;
+
+    /**
+     *
+     */
+    private Double r32;
+
+    /**
+     *
+     */
+    private Double r33;
+
+    /**
+     *
+     */
+    private Double r34;
+
+    /**
+     *
+     */
+    private Double r35;
+
+    /**
+     *
+     */
+    private Double r36;
+
+    /**
+     *
+     */
+    private Double r37;
+
+    /**
+     *
+     */
+    private Double r38;
+
+    /**
+     *
+     */
+    private Double r39;
+
+    /**
+     *
+     */
+    private Double r40;
+
+    /**
+     *
+     */
+    private Double r41;
+
+    /**
+     *
+     */
+    private Double r42;
+
+    /**
+     *
+     */
+    private Double r43;
+
+    /**
+     *
+     */
+    private Double r44;
+
+    /**
+     *
+     */
+    private Double r45;
+
+    /**
+     *
+     */
+    private Double r46;
+
+    /**
+     *
+     */
+    private Double r47;
+
+    /**
+     *
+     */
+    private Double r48;
+
+    /**
+     *
+     */
+    private Double r49;
+
+    /**
+     *
+     */
+    private Double r50;
+
+    public Object getPropertyByName(String propertyName) {
+        Object propertyValue = null;
+        try {
+            Field field = BenchmarkHistory.class.getDeclaredField(propertyName);
+            field.setAccessible(true);
+            propertyValue = field.get(this);
+        } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+            log.error("鑾峰彇灞炴€у紓甯?灞炴€у悕:{}", propertyName);
+        }
+        return propertyValue;
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\BenchmarkLog.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName benchmark_log
+ */
+@TableName(value ="benchmark_log")
+@Data
+public class BenchmarkLog implements Serializable {
+    /**
+     * 
+     */
+    private Integer nno;
+
+    /**
+     * 
+     */
+    private Integer modelId;
+
+    /**
+     * 
+     */
+    private String calcLog;
+
+    /**
+     * 
+     */
+    private Date insertTime;
+
+    /**
+     * 
+     */
+    private Integer samplenumber;
+
+    /**
+     * 
+     */
+    private Double timeComsumption;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\History.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName history
+ */
+@TableName(value ="history")
+@Data
+public class History implements Serializable {
+    /**
+     * 
+     */
+    private Date time;
+
+    /**
+     * 
+     */
+    private Double p1;
+
+    /**
+     * 
+     */
+    private Double p2;
+
+    /**
+     * 
+     */
+    private Double p3;
+
+    /**
+     * 
+     */
+    private Double p4;
+
+    /**
+     * 
+     */
+    private Double p5;
+
+    /**
+     * 
+     */
+    private Double p6;
+
+    /**
+     * 
+     */
+    private Double p7;
+
+    /**
+     * 
+     */
+    private Double p8;
+
+    /**
+     * 
+     */
+    private Double p9;
+
+    /**
+     * 
+     */
+    private Double p10;
+
+    /**
+     * 
+     */
+    private Double p11;
+
+    /**
+     * 
+     */
+    private Double p12;
+
+    /**
+     * 
+     */
+    private Double p13;
+
+    /**
+     * 
+     */
+    private Double p14;
+
+    /**
+     * 
+     */
+    private Double p15;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\InstantCalcLog.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName instant_calc_log
+ */
+@TableName(value ="instant_calc_log")
+@Data
+public class InstantCalcLog implements Serializable {
+    /**
+     * 
+     */
+    private Integer 妯″瀷瀹炰緥璁＄畻鏁伴噺;
+
+    /**
+     * 
+     */
+    private String 杩愯鐘舵€?
+
+    /**
+     * 
+     */
+    private Date 鏃ュ織鎻掑叆鏃堕棿;
+
+    /**
+     * 
+     */
+    private Double 璇诲彇閰嶇疆鑰楁椂;
+
+    /**
+     * 
+     */
+    private Double json瑙ｆ瀽1鑰楁椂;
+
+    /**
+     * 
+     */
+    private Double 璇籩xa鑰楁椂;
+
+    /**
+     * 
+     */
+    private Double 璋僷ython妯″瀷璁＄畻;
+
+    /**
+     * 
+     */
+    private Double 鍐檈xa鑰楁椂;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\InstantCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName instant_cfg
+ */
+@TableName(value ="instant_cfg")
+@Data
+public class InstantCfg implements Serializable {
+    /**
+     * 
+     */
+    private Integer mpId;
+
+    /**
+     * 
+     */
+    private Integer modelId;
+
+    /**
+     * 
+     */
+    private String mpName;
+
+    /**
+     * 
+     */
+    private String instantInfo;
+
+    /**
+     * 
+     */
+    private Integer interval;
+
+    /**
+     * 
+     */
+    private Integer hisSto;
+
+    /**
+     * 
+     */
+    private Integer visible;
+
+    /**
+     * 
+     */
+    private Integer status;
+
+    /**
+     * 
+     */
+    private Date setupTime;
+
+    /**
+     * 
+     */
+    private String newestUpdateTime;
+
+    /**
+     * 鏄惁杩愯姝ｅ父
+     */
+    private String running;
+
+    /**
+     * 杩愯鏃ュ織
+     */
+    private String runningLog;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\ModelCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * 
+ * @author 闄堝皬榛? * @TableName model_cfg
+ */
+@TableName(value ="model_cfg")
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ModelCfg implements Serializable {
+    /**
+     * 
+     */
+    @TableId(type = IdType.AUTO)
+    private Integer modelId;
+
+    /**
+     * 
+     */
+    private Integer systemId;
+
+    /**
+     * 
+     */
+    private Integer algorithmId;
+
+    /**
+     * 
+     */
+    private String modelName;
+
+    /**
+     * 
+     */
+    private Date creatTime;
+
+    /**
+     * 
+     */
+    private String creatName;
+
+    /**
+     * 
+     */
+    private String modelInfo;
+
+    /**
+     * 
+     */
+    private Integer status;
+
+    /**
+     * 
+     */
+    private Integer visible;
+
+    /**
+     * 
+     */
+    private String condition;
+
+    /**
+     * 
+     */
+    private Integer trash;
+
+    /**
+     *
+     */
+    private String marktype;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\ModelCondition.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName model_condition
+ */
+@TableName(value ="model_condition")
+@Data
+public class ModelCondition implements Serializable {
+    /**
+     * 
+     */
+    private String algorithm;
+
+    /**
+     * 
+     */
+    private String condition;
+
+    /**
+     * 
+     */
+    private Integer id;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\ModelOrRuleCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName model_or_rule_cfg
+ */
+@TableName(value ="model_or_rule_cfg")
+@Data
+public class ModelOrRuleCfg implements Serializable {
+    /**
+     * 
+     */
+    private Integer modelOrRule;
+
+    /**
+     * 
+     */
+    private String modelOrRuleName;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\ModelView.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName MODEL_VIEW
+ */
+@TableName(value ="MODEL_VIEW")
+@Data
+public class ModelView implements Serializable {
+    /**
+     * 
+     */
+    private Integer modelId;
+
+    /**
+     * 
+     */
+    private Integer systemId;
+
+    /**
+     * 
+     */
+    private Integer algorithmId;
+
+    /**
+     * 
+     */
+    private String modelName;
+
+    /**
+     * 
+     */
+    private Date creatTime;
+
+    /**
+     * 
+     */
+    private String creatName;
+
+    /**
+     * 
+     */
+    private String modelInfo;
+
+    /**
+     * 
+     */
+    private Integer status;
+
+    /**
+     * 
+     */
+    private Integer systemTypeId;
+
+    /**
+     * 
+     */
+    private String systemShortname;
+
+    /**
+     * 
+     */
+    private String systemName;
+
+    /**
+     * 
+     */
+    private Integer unitId;
+
+    /**
+     * 
+     */
+    private String systemTypeName;
+
+    /**
+     * 
+     */
+    private String systemTypeShortname;
+
+    /**
+     * 
+     */
+    private Integer plantId;
+
+    /**
+     * 
+     */
+    private String unitName;
+
+    /**
+     * 
+     */
+    private String unitShortname;
+
+    /**
+     * 
+     */
+    private String areaName;
+
+    /**
+     * 
+     */
+    private String areaShortname;
+
+    /**
+     * 
+     */
+    private String plantName;
+
+    /**
+     * 
+     */
+    private String plantShortname;
+
+    /**
+     * 
+     */
+    private Integer areaId;
+
+    /**
+     * 
+     */
+    private Integer instantNum;
+
+    /**
+     * 
+     */
+    private Integer visible;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\PlantCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName plant_cfg
+ */
+@TableName(value ="plant_cfg")
+@Data
+public class PlantCfg implements Serializable {
+    /**
+     * 
+     */
+    @TableId(type = IdType.AUTO)
+    private Integer plantId;
+
+    /**
+     * 
+     */
+    private Integer areaId;
+
+    /**
+     * 
+     */
+    private String plantName;
+
+    /**
+     * 
+     */
+    private String plantShortname;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\RecalcCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName recalc_cfg
+ */
+@TableName(value ="recalc_cfg")
+@Data
+public class RecalcCfg implements Serializable {
+    /**
+     * 
+     */
+    @TableId(type = IdType.AUTO)
+    private Integer nno;
+
+    /**
+     * 
+     */
+    private Integer modelId;
+
+    /**
+     * 
+     */
+    private Date starttime;
+
+    /**
+     * 
+     */
+    private Date endtime;
+
+    /**
+     * 
+     */
+    private Integer visible;
+
+    /**
+     * 
+     */
+    private Double process;
+
+    /**
+     * 
+     */
+    private Date inserttime;
+
+    /**
+     * 
+     */
+    private Integer samplenumber;
+
+    /**
+     * 
+     */
+    private Double computetime;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\SystemCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName system_cfg
+ */
+@TableName(value ="system_cfg")
+@Data
+public class SystemCfg implements Serializable {
+    /**
+     * 
+     */
+    @TableId(type = IdType.AUTO)
+    private Integer systemId;
+
+    /**
+     * 
+     */
+    private Integer systemTypeId;
+
+    /**
+     * 
+     */
+    private String systemName;
+
+    /**
+     * 
+     */
+    private String systemShortname;
+
+    /**
+     * 
+     */
+    private Integer unitId;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\SystemTypeCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * 
+ * @TableName system_type_cfg
+ */
+@TableName(value ="system_type_cfg")
+@Data
+public class SystemTypeCfg implements Serializable {
+    /**
+     * 
+     */
+    @TableId(type = IdType.AUTO)
+    private Integer systemTypeId;
+
+    /**
+     * 
+     */
+    private String systemTypeName;
+
+    /**
+     * 
+     */
+    private String systemTypeShortname;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\TeachTest.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * 鏁欏娴嬭瘯琛? * @TableName teach_test
+ */
+@TableName(value ="teach_test")
+@Data
+public class TeachTest implements Serializable {
+    /**
+     * 
+     */
+    @TableId(type = IdType.AUTO)
+    private Long id;
+
+    /**
+     * 鍚嶇О
+     */
+    private String name;
+
+    /**
+     * 骞撮緞
+     */
+    private Integer age;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\entity\UnitCfg.java =====
+
+package seu.powersis.alert.dao.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
+import java.io.Serializable;
+
+/**
+ * @TableName unit_cfg
+ */
+@TableName(value = "unit_cfg")
+@Data
+public class UnitCfg implements Serializable {
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    @TableId(type = IdType.AUTO)
+    private Integer unitId;
+    /**
+     *
+     */
+    private Integer plantId;
+    /**
+     *
+     */
+    private String unitName;
+    /**
+     *
+     */
+    private String unitShortname;
+    /**
+     *
+     */
+    private String 棰勮鏍囧噯璁粌鏍锋湰;
+    /**
+     *
+     */
+    private String loadpoint;
+    /**
+     *
+     */
+    private String temppoint;
+    /**
+     * exa鏁版嵁缁?     */
+    private String exaGroup;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\AlarmLevelCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.AlarmLevelCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆larm_level_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:00:06
+* @Entity seu.powersis.alert.dao.entity.AlarmLevelCfg
+*/
+public interface AlarmLevelCfgMapper extends BaseMapper<AlarmLevelCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\AlarmTypeCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.AlarmTypeCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆larm_type_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:01:27
+* @Entity seu.powersis.alert.dao.entity.AlarmTypeCfg
+*/
+public interface AlarmTypeCfgMapper extends BaseMapper<AlarmTypeCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\AlgorithmCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.AlgorithmCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆lgorithm_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:01:32
+* @Entity seu.powersis.alert.dao.entity.AlgorithmCfg
+*/
+public interface AlgorithmCfgMapper extends BaseMapper<AlgorithmCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\AreaCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.AreaCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆rea_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:01:38
+* @Entity seu.powersis.alert.dao.entity.AreaCfg
+*/
+public interface AreaCfgMapper extends BaseMapper<AreaCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\BenchmarkHistoryMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import seu.powersis.alert.dao.dto.IndexValueDTO;
+import seu.powersis.alert.dao.entity.BenchmarkHistory;
+
+import java.util.List;
+
+/**
+ * @author 闄堝皬榛? * @description 閽堝琛ㄣ€恇enchmark_history銆戠殑鏁版嵁搴撴搷浣淢apper
+ * @createDate 2023-09-12 22:36:41
+ * @Entity seu.powersis.alert.dao.entity.BenchmarkHistory
+ */
+public interface BenchmarkHistoryMapper extends BaseMapper<BenchmarkHistory> {
+    /**
+     * 鑾峰彇缁熻缁撴灉
+     *
+     * @param modelId   妯″瀷id
+     * @param type      绫诲瀷
+     * @param indexList 绱㈠紩
+     * @return 缁熻缁撴灉
+     */
+    List<IndexValueDTO> getIndexValue(Integer modelId, String type, List<Integer> indexList);
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\BenchmarkLogMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.BenchmarkLog;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恇enchmark_log銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:01:45
+* @Entity seu.powersis.alert.dao.entity.BenchmarkLog
+*/
+public interface BenchmarkLogMapper extends BaseMapper<BenchmarkLog> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\HistoryMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.History;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恏istory銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:01:48
+* @Entity seu.powersis.alert.dao.entity.History
+*/
+public interface HistoryMapper extends BaseMapper<History> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\InstantCalcLogMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.InstantCalcLog;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恑nstant_calc_log銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:01:51
+* @Entity seu.powersis.alert.dao.entity.InstantCalcLog
+*/
+public interface InstantCalcLogMapper extends BaseMapper<InstantCalcLog> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\InstantCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.InstantCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恑nstant_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:01:53
+* @Entity seu.powersis.alert.dao.entity.InstantCfg
+*/
+public interface InstantCfgMapper extends BaseMapper<InstantCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\ModelCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.ModelCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恗odel_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:01:56
+* @Entity seu.powersis.alert.dao.entity.ModelCfg
+*/
+public interface ModelCfgMapper extends BaseMapper<ModelCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\ModelConditionMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.ModelCondition;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恗odel_condition銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:01:59
+* @Entity seu.powersis.alert.dao.entity.ModelCondition
+*/
+public interface ModelConditionMapper extends BaseMapper<ModelCondition> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\ModelOrRuleCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.ModelOrRuleCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恗odel_or_rule_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:02:02
+* @Entity seu.powersis.alert.dao.entity.ModelOrRuleCfg
+*/
+public interface ModelOrRuleCfgMapper extends BaseMapper<ModelOrRuleCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\ModelViewMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.ModelView;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€怣ODEL_VIEW銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2024-07-16 22:16:11
+* @Entity seu.powersis.alert.dao.entity.ModelView
+*/
+public interface ModelViewMapper extends BaseMapper<ModelView> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\PlantCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.PlantCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恜lant_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:02:05
+* @Entity seu.powersis.alert.dao.entity.PlantCfg
+*/
+public interface PlantCfgMapper extends BaseMapper<PlantCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\RecalcCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.RecalcCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恟ecalc_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:02:08
+* @Entity seu.powersis.alert.dao.entity.RecalcCfg
+*/
+public interface RecalcCfgMapper extends BaseMapper<RecalcCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\SystemCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.SystemCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恠ystem_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:02:11
+* @Entity seu.powersis.alert.dao.entity.SystemCfg
+*/
+public interface SystemCfgMapper extends BaseMapper<SystemCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\SystemTypeCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.SystemTypeCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恠ystem_type_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:02:14
+* @Entity seu.powersis.alert.dao.entity.SystemTypeCfg
+*/
+public interface SystemTypeCfgMapper extends BaseMapper<SystemTypeCfg> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\TeachTestMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import seu.powersis.alert.dao.entity.TeachTest;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恡each_test(鏁欏娴嬭瘯琛?銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2024-07-12 19:33:48
+* @Entity seu.powersis.alert.dao.entity.TeachTest
+*/
+public interface TeachTestMapper extends BaseMapper<TeachTest> {
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\mapper\UnitCfgMapper.java =====
+
+package seu.powersis.alert.dao.mapper;
+
+import org.springframework.stereotype.Repository;
+import seu.powersis.alert.dao.entity.UnitCfg;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恥nit_cfg銆戠殑鏁版嵁搴撴搷浣淢apper
+* @createDate 2023-08-15 23:02:17
+* @Entity seu.powersis.alert.dao.entity.UnitCfg
+*/
+@Repository
+public interface UnitCfgMapper extends BaseMapper<UnitCfg> {
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\AlarmLevelCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.AlarmLevelCfg;
+import seu.powersis.alert.dao.service.AlarmLevelCfgService;
+import seu.powersis.alert.dao.mapper.AlarmLevelCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆larm_level_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:00:06
+*/
+@Service
+public class AlarmLevelCfgServiceImpl extends ServiceImpl<AlarmLevelCfgMapper, AlarmLevelCfg>
+    implements AlarmLevelCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\AlarmTypeCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.AlarmTypeCfg;
+import seu.powersis.alert.dao.service.AlarmTypeCfgService;
+import seu.powersis.alert.dao.mapper.AlarmTypeCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆larm_type_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:01:27
+*/
+@Service
+public class AlarmTypeCfgServiceImpl extends ServiceImpl<AlarmTypeCfgMapper, AlarmTypeCfg>
+    implements AlarmTypeCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\AlgorithmCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.AlgorithmCfg;
+import seu.powersis.alert.dao.service.AlgorithmCfgService;
+import seu.powersis.alert.dao.mapper.AlgorithmCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆lgorithm_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:01:32
+*/
+@Service
+public class AlgorithmCfgServiceImpl extends ServiceImpl<AlgorithmCfgMapper, AlgorithmCfg>
+    implements AlgorithmCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\AreaCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.AreaCfg;
+import seu.powersis.alert.dao.service.AreaCfgService;
+import seu.powersis.alert.dao.mapper.AreaCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆rea_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:01:38
+*/
+@Service
+public class AreaCfgServiceImpl extends ServiceImpl<AreaCfgMapper, AreaCfg>
+    implements AreaCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\BenchmarkHistoryServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.BenchmarkHistory;
+import seu.powersis.alert.dao.service.BenchmarkHistoryService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import seu.powersis.alert.dao.mapper.BenchmarkHistoryMapper;
+import seu.powersis.alert.param.BenchmarkHistoryQuery;
+import seu.powersis.alert.vo.BenchmarkHistoryVO;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恇enchmark_history銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-09-12 22:36:41
+*/
+@Service
+public class BenchmarkHistoryServiceImpl extends ServiceImpl<BenchmarkHistoryMapper, BenchmarkHistory>
+    implements BenchmarkHistoryService{
+
+    @Override
+    public List<BenchmarkHistoryVO> getHistory(BenchmarkHistoryQuery query) {
+        LambdaQueryWrapper<BenchmarkHistory> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(BenchmarkHistory::getModelId, query.getModelId())
+                .ge(query.getSt() != null, BenchmarkHistory::getStarttime, query.getSt())
+                .le(query.getEt() != null, BenchmarkHistory::getStarttime, query.getEt())
+                .orderByAsc(BenchmarkHistory::getStarttime);
+
+        List<BenchmarkHistory> list = this.list(queryWrapper);
+
+        return list.stream()
+                .map(item -> new BenchmarkHistoryVO(item.getStarttime(), item.getTargetvalue()))
+                .collect(Collectors.toList());
+    }
+
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\BenchmarkLogServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.BenchmarkLog;
+import seu.powersis.alert.dao.service.BenchmarkLogService;
+import seu.powersis.alert.dao.mapper.BenchmarkLogMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恇enchmark_log銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:01:45
+*/
+@Service
+public class BenchmarkLogServiceImpl extends ServiceImpl<BenchmarkLogMapper, BenchmarkLog>
+    implements BenchmarkLogService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\HistoryServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.History;
+import seu.powersis.alert.dao.service.HistoryService;
+import seu.powersis.alert.dao.mapper.HistoryMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恏istory銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:01:48
+*/
+@Service
+public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
+    implements HistoryService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\InstantCalcLogServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.InstantCalcLog;
+import seu.powersis.alert.dao.service.InstantCalcLogService;
+import seu.powersis.alert.dao.mapper.InstantCalcLogMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恑nstant_calc_log銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:01:51
+*/
+@Service
+public class InstantCalcLogServiceImpl extends ServiceImpl<InstantCalcLogMapper, InstantCalcLog>
+    implements InstantCalcLogService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\InstantCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.InstantCfg;
+import seu.powersis.alert.dao.service.InstantCfgService;
+import seu.powersis.alert.dao.mapper.InstantCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恑nstant_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:01:53
+*/
+@Service
+public class InstantCfgServiceImpl extends ServiceImpl<InstantCfgMapper, InstantCfg>
+    implements InstantCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\ModelCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.ModelCfg;
+import seu.powersis.alert.dao.service.ModelCfgService;
+import seu.powersis.alert.dao.mapper.ModelCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恗odel_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:01:56
+*/
+@Service
+public class ModelCfgServiceImpl extends ServiceImpl<ModelCfgMapper, ModelCfg>
+    implements ModelCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\ModelConditionServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.ModelCondition;
+import seu.powersis.alert.dao.service.ModelConditionService;
+import seu.powersis.alert.dao.mapper.ModelConditionMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恗odel_condition銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:01:59
+*/
+@Service
+public class ModelConditionServiceImpl extends ServiceImpl<ModelConditionMapper, ModelCondition>
+    implements ModelConditionService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\ModelOrRuleCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.ModelOrRuleCfg;
+import seu.powersis.alert.dao.service.ModelOrRuleCfgService;
+import seu.powersis.alert.dao.mapper.ModelOrRuleCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恗odel_or_rule_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:02:02
+*/
+@Service
+public class ModelOrRuleCfgServiceImpl extends ServiceImpl<ModelOrRuleCfgMapper, ModelOrRuleCfg>
+    implements ModelOrRuleCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\ModelViewServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import seu.powersis.alert.dao.entity.ModelView;
+import seu.powersis.alert.dao.mapper.ModelViewMapper;
+import seu.powersis.alert.dao.service.BenchmarkHistoryService;
+import seu.powersis.alert.dao.service.ModelViewService;
+import seu.powersis.alert.service.ExaService;
+import seu.powersis.alert.vo.ModelInfoVO;
+import seu.powersis.alert.vo.OptimisticVO;
+import seu.powersis.alert.vo.PointVO;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * @author 闄堝皬榛? * @description 閽堝琛ㄣ€怣ODEL_VIEW銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+ * @createDate 2024-07-16 22:16:11
+ */
+@Service
+@RequiredArgsConstructor
+public class ModelViewServiceImpl extends ServiceImpl<ModelViewMapper, ModelView>
+        implements ModelViewService {
+    private final BenchmarkHistoryService benchmarkHistoryService;
+    private final ExaService exaService;
+    @Value("${algorithm.host}")
+    private String algorithmHost;
+
+    @Override
+    public List<OptimisticVO> getOptimistic(Integer id, String search, String st, String et) {
+        LambdaQueryWrapper<ModelView> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(id != null, ModelView::getSystemId, id);
+        List<ModelView> list = list(queryWrapper);
+        List<OptimisticVO> result = new ArrayList<>();
+
+        for (ModelView modelView : list) {
+            String modelInfo = modelView.getModelInfo();
+            if (StrUtil.isBlank(modelInfo)) {
+                continue;
+            }
+            ModelInfoVO modelInfoVO = JSON.parseObject(modelInfo, ModelInfoVO.class);
+            OptimisticVO vo = new OptimisticVO();
+            String description = modelInfoVO.getTargetParameter().getDescription();
+            List<String> boundary = modelInfoVO.getBoundaryParameter().stream()
+                    .map(PointVO::getDescription).collect(Collectors.toList());
+            if (StrUtil.isNotBlank(search) && !description.contains(search) && !JSON.toJSONString(boundary).contains(search)) {
+                continue;
+            }
+            List<String> boundaryPoints = modelInfoVO.getBoundaryParameter().stream()
+                    .map(PointVO::getTargetPoint).collect(Collectors.toList());
+            String targetPoint = modelInfoVO.getTargetParameter().getTargetPoint();
+            Float[] bValue = exaService.getValues(boundaryPoints);
+            List<Float> values = Arrays.stream(bValue)
+                    .map(t -> {
+                        if (t == null) {
+                            return -999F;
+                        } else {
+                            return Float.parseFloat(NumberUtil.decimalFormat("#.##", t));
+                        }
+                    }).
+                    collect(Collectors.toList());
+            Float targetValue = exaService.getValues(ListUtil.of(targetPoint))[0];
+            String t;
+            if (targetValue == null) {
+                t = "-999";
+            } else {
+                t = NumberUtil.decimalFormat("#.##", targetValue);
+            }
+            vo.setModelId(modelView.getModelId());
+            vo.setTargetName(description);
+            vo.setBoundaryName(JSON.toJSONString(boundary));
+            vo.setTargetValue(t);
+            vo.setBoundaryValue(JSON.toJSONString(values));
+            vo.setHistoryBest(getBest(modelInfoVO, st, et, bValue, modelInfoVO.getTargetParameter().getMarktype()));
+            result.add(vo);
+        }
+        return result;
+    }
+
+    public String getBest(ModelInfoVO modelInfoVO, String st, String et, Float[] bValue, String type) {
+        Map<String, Object> modelInfo = new HashMap<>();
+        modelInfo.put("id", modelInfoVO.getId());
+        List<Map<String, Object>> boundaryParameter = Optional.ofNullable(modelInfoVO.getBoundaryParameter())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(pointVO -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("lowerlimit", pointVO.getLowerlimit());
+                    map.put("upperlimit", pointVO.getUpperlimit());
+                    map.put("gridNumber", pointVO.getGridNumber());
+                    return map;
+                }).collect(Collectors.toList());
+        modelInfo.put("boundary_parameter", boundaryParameter);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("model_info", modelInfo);
+        body.put("number", 50);
+        body.put("st", st);
+        body.put("et", et);
+        body.put("object_value", Collections.singletonList(Arrays.asList(bValue)));
+        body.put("alg_name", "RF");
+        body.put("type", StrUtil.isBlank(type) ? "max" : type);
+        try (HttpResponse response = HttpUtil.createPost(algorithmHost + "/benchmark")
+                .body(JSON.toJSONString(body))
+                .execute()) {
+            String responseBody = response.body();
+            JSONObject jsonObject = JSON.parseObject(responseBody);
+            if (jsonObject == null || !jsonObject.containsKey("result_list")) {
+                return JSON.toJSONString(body);
+            }
+            return jsonObject.getString("result_list");
+        } catch (Exception e) {
+            log.error("鑾峰彇鏈€浼樺€煎紓甯?, e);
+            return e.getMessage();
+        }
+
+    }
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\PlantCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.PlantCfg;
+import seu.powersis.alert.dao.service.PlantCfgService;
+import seu.powersis.alert.dao.mapper.PlantCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恜lant_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:02:05
+*/
+@Service
+public class PlantCfgServiceImpl extends ServiceImpl<PlantCfgMapper, PlantCfg>
+    implements PlantCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\RecalcCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.RecalcCfg;
+import seu.powersis.alert.dao.service.RecalcCfgService;
+import seu.powersis.alert.dao.mapper.RecalcCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恟ecalc_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:02:08
+*/
+@Service
+public class RecalcCfgServiceImpl extends ServiceImpl<RecalcCfgMapper, RecalcCfg>
+    implements RecalcCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\SystemCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.SystemCfg;
+import seu.powersis.alert.dao.service.SystemCfgService;
+import seu.powersis.alert.dao.mapper.SystemCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恠ystem_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:02:11
+*/
+@Service
+public class SystemCfgServiceImpl extends ServiceImpl<SystemCfgMapper, SystemCfg>
+    implements SystemCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\SystemTypeCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.SystemTypeCfg;
+import seu.powersis.alert.dao.service.SystemTypeCfgService;
+import seu.powersis.alert.dao.mapper.SystemTypeCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恠ystem_type_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:02:14
+*/
+@Service
+public class SystemTypeCfgServiceImpl extends ServiceImpl<SystemTypeCfgMapper, SystemTypeCfg>
+    implements SystemTypeCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\TeachTestServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.TeachTest;
+import seu.powersis.alert.dao.service.TeachTestService;
+import seu.powersis.alert.dao.mapper.TeachTestMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恡each_test(鏁欏娴嬭瘯琛?銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2024-07-12 19:33:48
+*/
+@Service
+public class TeachTestServiceImpl extends ServiceImpl<TeachTestMapper, TeachTest>
+    implements TeachTestService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\impl\UnitCfgServiceImpl.java =====
+
+package seu.powersis.alert.dao.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import seu.powersis.alert.dao.entity.UnitCfg;
+import seu.powersis.alert.dao.service.UnitCfgService;
+import seu.powersis.alert.dao.mapper.UnitCfgMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恥nit_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice瀹炵幇
+* @createDate 2023-08-15 23:02:17
+*/
+@Service
+public class UnitCfgServiceImpl extends ServiceImpl<UnitCfgMapper, UnitCfg>
+    implements UnitCfgService{
+
+}
+
+
+
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\AlarmLevelCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.AlarmLevelCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆larm_level_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:00:06
+*/
+public interface AlarmLevelCfgService extends IService<AlarmLevelCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\AlarmTypeCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.AlarmTypeCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆larm_type_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:01:27
+*/
+public interface AlarmTypeCfgService extends IService<AlarmTypeCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\AlgorithmCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.AlgorithmCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆lgorithm_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:01:32
+*/
+public interface AlgorithmCfgService extends IService<AlgorithmCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\AreaCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.AreaCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恆rea_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:01:38
+*/
+public interface AreaCfgService extends IService<AreaCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\BenchmarkHistoryService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import seu.powersis.alert.dao.entity.BenchmarkHistory;
+import seu.powersis.alert.param.BenchmarkHistoryQuery;
+import seu.powersis.alert.vo.BenchmarkHistoryVO;
+
+import java.util.List;
+
+/**
+ * @author 10929
+ * @description 閽堝琛ㄣ€恇enchmark_history銆戠殑鏁版嵁搴撴搷浣淪ervice
+ * @createDate 2024-07-16 16:32:00
+ */
+public interface BenchmarkHistoryService extends IService<BenchmarkHistory> {
+    List<BenchmarkHistoryVO> getHistory(BenchmarkHistoryQuery query);
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\BenchmarkLogService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.BenchmarkLog;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恇enchmark_log銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:01:45
+*/
+public interface BenchmarkLogService extends IService<BenchmarkLog> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\HistoryService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.History;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恏istory銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:01:48
+*/
+public interface HistoryService extends IService<History> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\InstantCalcLogService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.InstantCalcLog;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恑nstant_calc_log銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:01:51
+*/
+public interface InstantCalcLogService extends IService<InstantCalcLog> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\InstantCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.InstantCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恑nstant_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:01:53
+*/
+public interface InstantCfgService extends IService<InstantCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\ModelCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.ModelCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恗odel_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:01:56
+*/
+public interface ModelCfgService extends IService<ModelCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\ModelConditionService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.ModelCondition;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恗odel_condition銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:01:59
+*/
+public interface ModelConditionService extends IService<ModelCondition> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\ModelOrRuleCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.ModelOrRuleCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恗odel_or_rule_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:02:02
+*/
+public interface ModelOrRuleCfgService extends IService<ModelOrRuleCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\ModelViewService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import seu.powersis.alert.dao.entity.ModelView;
+import seu.powersis.alert.vo.OptimisticVO;
+
+import java.util.List;
+
+/**
+ * @author 闄堝皬榛? * @description 閽堝琛ㄣ€怣ODEL_VIEW銆戠殑鏁版嵁搴撴搷浣淪ervice
+ * @createDate 2024-07-16 22:16:11
+ */
+public interface ModelViewService extends IService<ModelView> {
+    /**
+     * @param id
+     * @param search
+     * @return
+     */
+    List<OptimisticVO> getOptimistic(Integer id, String search, String st, String et);
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\PlantCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.PlantCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恜lant_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:02:05
+*/
+public interface PlantCfgService extends IService<PlantCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\RecalcCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.RecalcCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恟ecalc_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:02:08
+*/
+public interface RecalcCfgService extends IService<RecalcCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\SystemCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.SystemCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恠ystem_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:02:11
+*/
+public interface SystemCfgService extends IService<SystemCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\SystemTypeCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.SystemTypeCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恠ystem_type_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:02:14
+*/
+public interface SystemTypeCfgService extends IService<SystemTypeCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\TeachTestService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.TeachTest;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恡each_test(鏁欏娴嬭瘯琛?銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2024-07-12 19:33:48
+*/
+public interface TeachTestService extends IService<TeachTest> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\dao\service\UnitCfgService.java =====
+
+package seu.powersis.alert.dao.service;
+
+import seu.powersis.alert.dao.entity.UnitCfg;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author 闄堝皬榛?* @description 閽堝琛ㄣ€恥nit_cfg銆戠殑鏁版嵁搴撴搷浣淪ervice
+* @createDate 2023-08-15 23:02:17
+*/
+public interface UnitCfgService extends IService<UnitCfg> {
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\param\BenchmarkHistoryQuery.java =====
+
+package seu.powersis.alert.param;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+/**
+ * @author Cascade
+ * @version 1.0
+ * @date 2025-12-24
+ */
+@Data
+public class BenchmarkHistoryQuery {
+    private Integer modelId;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date st;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date et;
+}
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\param\CreateModelInfo.java =====
+
+package seu.powersis.alert.param;
+
+import lombok.Data;
+import seu.powersis.alert.vo.ModelInfoVO;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-20 22:57
+ */
+@Data
+public class CreateModelInfo {
+    private Integer systemId;
+    private ModelInfoVO modelInfo;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\param\ModelDataQuery.java =====
+
+package seu.powersis.alert.param;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-09-15 22:52
+ */
+@Data
+public class ModelDataQuery {
+    private String type;
+    @NotBlank
+    private String index;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date st;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date et;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\param\ModelSelectQuery.java =====
+
+package seu.powersis.alert.param;
+
+import lombok.Data;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 13:25
+ */
+@Data
+public class ModelSelectQuery {
+    /**
+     * 鏈虹粍id
+     */
+    private Integer unitId;
+    /**
+     * 绯荤粺id
+     */
+    private Integer typeId;
+    /**
+     * 瀛愮郴缁焛d
+     */
+    private Integer systemId;
+
+    /**
+     * 鍚嶇О
+     */
+    private String name;
+
+    /**
+     * @see seu.powersis.alert.common.enums.ModelStatus
+     * 妯″瀷鐘舵€?     */
+    private Integer status;
+
+    /**
+     * @see seu.powersis.alert.common.enums.ModelTrash
+     * 鍙鐘舵€?     */
+    private Integer visible;
+
+    /**
+     * @see seu.powersis.alert.common.enums.ModelTrash
+     * 鍒犻櫎鐘舵€?     */
+    private Integer trash;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\param\OptimisticQuery.java =====
+
+package seu.powersis.alert.param;
+
+import lombok.Data;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2024-07-16 23:05
+ */
+@Data
+public class OptimisticQuery {
+    private Integer id;
+
+    private String search;
+    private String st;
+    private String et;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\param\SelectQuery.java =====
+
+package seu.powersis.alert.param;
+
+import lombok.Data;
+import lombok.NonNull;
+
+import javax.validation.constraints.NotNull;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-17 23:48
+ */
+@Data
+public class SelectQuery {
+    @NotNull
+    private Integer unitId;
+    @NonNull
+    private Integer typeId;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\param\TimeRange.java =====
+
+package seu.powersis.alert.param;
+
+import lombok.Data;
+
+import java.util.Date;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-09-15 22:33
+ */
+@Data
+public class TimeRange {
+    private Date st;
+    private Date et;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\service\impl\ExaServiceImpl.java =====
+
+package seu.powersis.alert.service.impl;
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import seu.powersis.alert.common.model.ExaPoint;
+import seu.powersis.alert.service.ExaService;
+import seu.powersis.alert.vo.PointOptionItemVO;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-20 20:23
+ */
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ExaServiceImpl implements ExaService {
+    private static final String EXA_SEARCH_FORMATTER = "ItemName like'%%%s%%' or Descriptor like '%%%s%%'";
+
+    private static final String EXA_SEARCH_KEY = "WhereClause";
+
+    private static final String ID_SPLIT = "|";
+
+    @Value("${exa.get-item-url}")
+    private String getItemsUrl;
+
+    @Value("${exa.get-values}")
+    private String getValuesUrl;
+
+    @Override
+    public List<PointOptionItemVO> getPointOptionList(String search) {
+        try {
+            String whereClause = String.format(EXA_SEARCH_FORMATTER, search, search);
+            Map<String, Object> params = new HashMap<>(4);
+            params.put(EXA_SEARCH_KEY, whereClause);
+            String body = HttpUtil.get(getItemsUrl, params);
+            if (!StringUtils.hasLength(body)) {
+                log.error("鑾峰彇exa寮傚父:{}", search);
+                return new ArrayList<>();
+            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            List<ExaPoint> points = objectMapper.readValue(body, new TypeReference<List<ExaPoint>>() {
+            });
+            return points.stream().map(p -> PointOptionItemVO.builder()
+                            .id(p.getDescriptor() + ID_SPLIT +
+                                    p.getItemName() + ID_SPLIT +
+                                    p.getEngUnits() + ID_SPLIT +
+                                    p.getUpperLimit() + ID_SPLIT +
+                                    p.getLowerLimit())
+                            .name(p.getDescriptor() + "  (" + p.getItemName() + ")")
+                            .build())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            log.error("鑾峰彇exa寮傚父:{}", search, e);
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Float[] getValues(List<String> points) {
+        Float[] res = new Float[points.size()];
+        Map<String, Object> body = new HashMap<>(2);
+        body.put("ItemNameArray", points);
+        try (HttpResponse response = HttpUtil.createPost(getValuesUrl)
+                .body(JSON.toJSONString(body))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .execute()) {
+            String post = response.body();
+            JSONObject bodyObj = JSON.parseObject(post);
+            JSONArray values = bodyObj.getJSONArray("ValueArray");
+            if (values.size() != points.size()) {
+                log.error("exa杩斿洖缁撴灉寮傚父,points:{},杩斿洖缁撴灉:{}", points, post);
+                return res;
+            }
+            for (int i = 0; i < values.size(); i++) {
+                res[i] = values.getFloatValue(i);
+            }
+        } catch (Exception e) {
+            log.error("鑾峰彇exa鐐瑰彿鏃跺疄鍊煎紓甯?points:{}", points, e);
+        }
+        return res;
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\service\impl\ModelDataServiceImpl.java =====
+
+package seu.powersis.alert.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import seu.powersis.alert.dao.entity.BenchmarkHistory;
+import seu.powersis.alert.dao.service.BenchmarkHistoryService;
+import seu.powersis.alert.service.ModelDataService;
+import seu.powersis.alert.vo.ModelDataVO;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-09-05 22:11
+ */
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ModelDataServiceImpl implements ModelDataService {
+
+    private final BenchmarkHistoryService benchmarkHistoryService;
+
+    public static int[][] ensureSquareCapacity(int[][] matrix, int minSize) {
+        int currentSize = matrix.length;
+
+        if (currentSize > minSize) {
+            return matrix; // 褰撳墠瀹归噺澶熺敤锛屼笉鐢ㄦ墿瀹?        }
+
+        int newSize = minSize + 1; // 2鍊嶆墿瀹圭瓥鐣?        int[][] newMatrix = new int[newSize][newSize];
+
+        // 鎷疯礉鏃ф暟鎹?        for (int i = 0; i < currentSize; i++) {
+            System.arraycopy(matrix[i], 0, newMatrix[i], 0, currentSize);
+        }
+
+        return newMatrix;
+    }
+
+    public static int[] ensureCapacity(int[] array, int minCapacity) {
+        if (array.length > minCapacity) {
+            return array; // 宸茬粡澶熺敤
+        }
+        int newCapacity = minCapacity + 1;
+        int[] newArray = new int[newCapacity];
+        System.arraycopy(array, 0, newArray, 0, array.length);
+        return newArray;
+    }
+
+    @Override
+    public ModelDataVO getModelData(Integer modelId, String type, List<Integer> indexList, Date st, Date et) {
+
+        LambdaQueryWrapper<BenchmarkHistory> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(BenchmarkHistory::getModelId, modelId)
+                .eq(StringUtils.hasText(type), BenchmarkHistory::getType, type)
+                .ge(BenchmarkHistory::getStarttime, st)
+                .le(BenchmarkHistory::getEndtime, et);
+        List<BenchmarkHistory> list = benchmarkHistoryService.list(queryWrapper);
+        List<Double> targetValue = new ArrayList<>();
+        int[] sampleValue = new int[10];
+        List<List<Double>> dataList = new ArrayList<>();
+        for (Integer ignored : indexList) {
+            dataList.add(new ArrayList<>());
+        }
+        int[][] matrix = new int[10][10];
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        List<int[]> heatData = new ArrayList<>();
+        for (BenchmarkHistory benchmarkHistory : list) {
+            targetValue.add(Double.parseDouble(decimalFormat.format(benchmarkHistory.getTargetvalue())));
+            for (int i = 0; i < indexList.size(); i++) {
+                Integer index = indexList.get(i);
+                String propertyName = "b" + (index + 1);
+                String indexName = "b" + (index + 1) + "Id";
+                Object propertyByName = benchmarkHistory.getPropertyByName(indexName);
+                if (Objects.nonNull(propertyByName)) {
+                    int sampleIndex = ((int) propertyByName) - 1;
+                    sampleValue = ensureCapacity(sampleValue, sampleIndex);
+                    sampleValue[sampleIndex] += benchmarkHistory.getSamplenum();
+                }
+
+                List<Double> data = dataList.get(i);
+                Object propertyByName1 = benchmarkHistory.getPropertyByName(propertyName);
+                if (Objects.nonNull(propertyByName1)) {
+                    double property = (double) propertyByName1;
+                    property = Double.parseDouble(decimalFormat.format(property));
+                    data.add(property);
+                } else {
+                    data.add(-9999D);
+                }
+
+            }
+            String bId = benchmarkHistory.getBId();
+            String[] split = bId.split("-");
+            int xIndex = Integer.parseInt(split[1]) - 1;
+            int yIndex = Integer.parseInt(split[2]) - 1;
+            matrix = ensureSquareCapacity(matrix, Math.max(xIndex, yIndex));
+            matrix[xIndex][yIndex] += benchmarkHistory.getSamplenum();
+        }
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                heatData.add(new int[]{i, j, matrix[i][j]});
+            }
+        }
+        return ModelDataVO.builder().dataList(dataList)
+                .targetValue(targetValue)
+                .sampleValue(sampleValue)
+                .heatData(heatData)
+                .build();
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\service\impl\ModelServiceImpl.java =====
+
+package seu.powersis.alert.service.impl;
+
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import seu.powersis.alert.common.enums.Algorithm;
+import seu.powersis.alert.common.enums.ModelStatus;
+import seu.powersis.alert.common.enums.ModelTrash;
+import seu.powersis.alert.common.enums.ModelVisible;
+import seu.powersis.alert.common.model.ModelInfo;
+import seu.powersis.alert.common.model.Point;
+import seu.powersis.alert.dao.entity.ModelCfg;
+import seu.powersis.alert.dao.entity.SystemCfg;
+import seu.powersis.alert.dao.service.ModelCfgService;
+import seu.powersis.alert.dao.service.SystemCfgService;
+import seu.powersis.alert.param.CreateModelInfo;
+import seu.powersis.alert.param.ModelSelectQuery;
+import seu.powersis.alert.service.ExaService;
+import seu.powersis.alert.service.ModelService;
+import seu.powersis.alert.vo.ModelInfoVO;
+import seu.powersis.alert.vo.ModelSimpleVO;
+import seu.powersis.alert.vo.PointVO;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 13:22
+ */
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ModelServiceImpl implements ModelService {
+    private final ModelCfgService modelCfgService;
+
+    private final SystemCfgService systemCfgService;
+
+    private final ExaService exaService;
+
+    @Override
+    public List<ModelSimpleVO> getModelList(ModelSelectQuery query) {
+        Integer systemId = query.getSystemId();
+        String modelName = query.getName();
+        Integer status = query.getStatus();
+        Integer trash = query.getTrash();
+        Integer typeId = query.getTypeId();
+        List<Integer> systems = null;
+        if (Objects.nonNull(typeId)) {
+            LambdaQueryWrapper<SystemCfg> systemQuery = new LambdaQueryWrapper<>();
+            systemQuery.eq(SystemCfg::getSystemTypeId, typeId);
+            List<SystemCfg> list = systemCfgService.list(systemQuery);
+            systems = list.stream().map(SystemCfg::getSystemId).collect(Collectors.toList());
+        }
+        LambdaQueryWrapper<ModelCfg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Objects.nonNull(systemId), ModelCfg::getSystemId, systemId)
+                .eq(Objects.nonNull(status), ModelCfg::getStatus, status)
+                .eq(Objects.nonNull(trash), ModelCfg::getTrash, trash)
+                .eq(ModelCfg::getVisible, ModelVisible.VISIBLE.code)
+                .in(CollUtil.isNotEmpty(systems), ModelCfg::getSystemId, systems)
+                .like(StringUtils.hasLength(modelName), ModelCfg::getModelName, modelName);
+        List<ModelCfg> list = modelCfgService.list(queryWrapper);
+        return list.stream().map(modelCfg -> ModelSimpleVO.builder()
+                        .id(modelCfg.getModelId())
+                        .name(modelCfg.getModelName().trim())
+                        .creatName(modelCfg.getCreatName())
+                        .creatTime(modelCfg.getCreatTime())
+                        .status(modelCfg.getStatus())
+                        .algorithm(Algorithm.of(modelCfg.getAlgorithmId()).toString())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ModelInfoVO getModelInfo(Integer id) {
+        LambdaQueryWrapper<ModelCfg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ModelCfg::getModelId, id);
+        ModelCfg model = modelCfgService.getOne(queryWrapper);
+        String modelInfo = model.getModelInfo();
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            ModelInfo info = objectMapper.readValue(modelInfo, ModelInfo.class);
+            String targetPoint = info.getTargetParameter().getTargetPoint();
+            List<String> boundaryValue = info.getBoundaryParameter()
+                    .stream().map(Point::getTargetPoint)
+                    .collect(Collectors.toList());
+            List<String> relation = info.getRelationParameter().stream().map(Point::getTargetPoint)
+                    .collect(Collectors.toList());
+            boundaryValue.addAll(relation);
+            boundaryValue.add(targetPoint);
+            Float[] values = exaService.getValues(boundaryValue);
+            ModelInfoVO vo = new ModelInfoVO();
+            BeanUtil.copyProperties(info, vo);
+            int index = 0;
+            List<PointVO> boundaryParameter = vo.getBoundaryParameter();
+            for (PointVO pointVO : boundaryParameter) {
+                pointVO.setValue(values[index++]);
+            }
+            List<PointVO> relationParameter = vo.getRelationParameter();
+            for (PointVO pointVO : relationParameter) {
+                pointVO.setValue(values[index++]);
+            }
+            vo.getTargetParameter().setValue(values[index]);
+            vo.setCreateName(model.getCreatName());
+            vo.setCreateTime(model.getCreatTime());
+            vo.setCondition(model.getCondition());
+            return vo;
+        } catch (JsonProcessingException e) {
+            log.error("model info:{}瑙ｆ瀽澶辫触", modelInfo, e);
+        }
+        return null;
+    }
+
+    @Override
+    public Integer createModel(CreateModelInfo model) {
+        try {
+            ModelInfoVO modelInfo = model.getModelInfo();
+            ModelInfo info = new ModelInfo();
+            BeanUtil.copyProperties(modelInfo, info);
+            ObjectMapper objectMapper = new ObjectMapper();
+            ModelCfg cfg = ModelCfg.builder()
+                    .systemId(model.getSystemId())
+                    .algorithmId(1)
+                    .modelName(modelInfo.getModelName())
+                    .creatName("admin")
+                    .visible(ModelVisible.VISIBLE.code)
+                    .status(ModelStatus.TRAINING.code)
+                    .trash(ModelTrash.NORMAL.code)
+                    .creatTime(new Date())
+                    .modelInfo(objectMapper.writeValueAsString(info))
+                    .build();
+            modelCfgService.save(cfg);
+            info.setId(cfg.getModelId());
+            cfg.setModelInfo(objectMapper.writeValueAsString(info));
+            modelCfgService.updateById(cfg);
+            return cfg.getModelId();
+        } catch (JsonProcessingException e) {
+            log.error("鏂板缓妯″瀷寮傚父,model:{}", model);
+        }
+
+        return -1;
+    }
+
+    @Override
+    public Boolean updateModelInfo(ModelInfoVO modelInfo) {
+        ModelInfo entity = new ModelInfo();
+        try {
+            BeanUtil.copyProperties(modelInfo, entity);
+            ObjectMapper objectMapper = new ObjectMapper();
+            String info = objectMapper.writeValueAsString(entity);
+            LambdaUpdateWrapper<ModelCfg> updateWrapper = new LambdaUpdateWrapper<>();
+            updateWrapper.set(ModelCfg::getModelInfo, info)
+                    .eq(ModelCfg::getModelId, modelInfo.getId());
+            return modelCfgService.update(updateWrapper);
+        } catch (JsonProcessingException e) {
+            log.error("妯″瀷搴忓垪鍖栧紓甯?{}", entity, e);
+        }
+        return false;
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\service\impl\SelectServiceImpl.java =====
+
+package seu.powersis.alert.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import seu.powersis.alert.dao.entity.SystemCfg;
+import seu.powersis.alert.dao.entity.SystemTypeCfg;
+import seu.powersis.alert.dao.entity.UnitCfg;
+import seu.powersis.alert.dao.service.SystemCfgService;
+import seu.powersis.alert.dao.service.SystemTypeCfgService;
+import seu.powersis.alert.dao.service.UnitCfgService;
+import seu.powersis.alert.param.SelectQuery;
+import seu.powersis.alert.service.SelectService;
+import seu.powersis.alert.vo.OptionItemVO;
+import seu.powersis.alert.vo.SelectAllOptionVO;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-16 22:45
+ */
+@Service
+@RequiredArgsConstructor
+public class SelectServiceImpl implements SelectService {
+    private final UnitCfgService unitCfgService;
+
+    private final SystemTypeCfgService systemTypeCfgService;
+
+    private final SystemCfgService systemCfgService;
+
+    @Override
+    public SelectAllOptionVO getAllOptions() {
+        List<UnitCfg> unitCfgList = unitCfgService.list();
+
+        LambdaQueryWrapper<SystemTypeCfg> typeQuery = new LambdaQueryWrapper<>();
+        typeQuery.orderByAsc(SystemTypeCfg::getSystemTypeId);
+        List<SystemTypeCfg> typeCfgList = systemTypeCfgService.list(typeQuery);
+
+        LambdaQueryWrapper<SystemCfg> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SystemCfg::getSystemTypeId, typeCfgList.get(0).getSystemTypeId())
+                .eq(SystemCfg::getUnitId, unitCfgList.get(0).getUnitId())
+                .orderByAsc(SystemCfg::getSystemId);
+        List<SystemCfg> systemCfgList = systemCfgService.list(queryWrapper);
+
+
+        List<OptionItemVO> units = unitCfgList.stream().map(o -> OptionItemVO.builder()
+                .id(o.getUnitId())
+                .name(o.getUnitName().trim())
+                .build()).collect(Collectors.toList());
+        List<OptionItemVO> types = typeCfgList.stream().map(o -> OptionItemVO.builder()
+                .id(o.getSystemTypeId())
+                .name(o.getSystemTypeShortname().trim())
+                .build()).collect(Collectors.toList());
+
+        List<OptionItemVO> systems = systemCfgList.stream().map(o -> OptionItemVO.builder()
+                .id(o.getSystemId())
+                .name(o.getSystemName().trim())
+                .build()).collect(Collectors.toList());
+        systems.add(0,OptionItemVO.builder().id(null).name("鍏ㄩ儴").build());
+        return SelectAllOptionVO.builder()
+                .units(units)
+                .types(types)
+                .systems(systems)
+                .build();
+    }
+
+    @Override
+    public List<OptionItemVO> getSystemOptions(@Valid SelectQuery query) {
+        LambdaQueryWrapper<SystemCfg> queryWrapper = new LambdaQueryWrapper<>();
+        Integer unitId = query.getUnitId();
+        Integer typeId = query.getTypeId();
+        queryWrapper.eq(SystemCfg::getSystemTypeId, typeId)
+                .eq(SystemCfg::getUnitId, unitId)
+                .orderByAsc(SystemCfg::getSystemId);
+        List<SystemCfg> systemCfgList = systemCfgService.list(queryWrapper);
+        List<OptionItemVO> systems = systemCfgList.stream().map(o -> OptionItemVO.builder()
+                        .id(o.getSystemId())
+                        .name(o.getSystemName().trim())
+                        .build())
+                .collect(Collectors.toList());
+        systems.add(0,OptionItemVO.builder().id(null).name("鍏ㄩ儴").build());
+        return systems;
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\service\ExaService.java =====
+
+package seu.powersis.alert.service;
+
+import seu.powersis.alert.vo.PointOptionItemVO;
+
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-20 20:21
+ */
+public interface ExaService {
+    /**
+     * 鑾峰彇娴嬬偣閫夐」
+     *
+     * @param search 鏌ヨ鏉′欢
+     * @return 閫夐」
+     */
+    List<PointOptionItemVO> getPointOptionList(String search);
+
+    public Float[] getValues(List<String> points);
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\service\ModelDataService.java =====
+
+package seu.powersis.alert.service;
+
+import seu.powersis.alert.vo.ModelDataVO;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-09-05 22:10
+ */
+public interface ModelDataService {
+    /**
+     * 鑾峰彇妯″瀷鏁版嵁
+     *
+     * @param modelId   妯″瀷id
+     * @param type      绫诲瀷
+     * @param indexList 杈圭晫鍙傛暟绱㈠紩
+     * @param st        寮€濮嬫椂闂?     * @param et        缁撴潫鏃堕棿
+     * @return 妯″瀷鏁版嵁
+     */
+    ModelDataVO getModelData(Integer modelId, String type, List<Integer> indexList, Date st, Date et);
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\service\ModelService.java =====
+
+package seu.powersis.alert.service;
+
+import seu.powersis.alert.param.CreateModelInfo;
+import seu.powersis.alert.param.ModelSelectQuery;
+import seu.powersis.alert.vo.ModelInfoVO;
+import seu.powersis.alert.vo.ModelSimpleVO;
+
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 13:22
+ */
+public interface ModelService {
+    /**
+     * 鑾峰彇妯″瀷鍒楄〃
+     *
+     * @param query 璇锋眰鍙傛暟
+     * @return model 鍒楄〃
+     */
+    List<ModelSimpleVO> getModelList(ModelSelectQuery query);
+
+    /**
+     * 鑾峰彇妯″瀷淇℃伅
+     *
+     * @param id 妯″瀷id
+     * @return 妯″瀷淇℃伅
+     */
+    ModelInfoVO getModelInfo(Integer id);
+
+    /**
+     * 鏂板缓妯″瀷
+     *
+     * @param model 妯″瀷鍙傛暟
+     * @return 妯″瀷id
+     */
+    Integer createModel(CreateModelInfo model);
+
+    /**
+     * 鏇存柊model info
+     *
+     * @param info 妯″瀷info
+     * @return 鏄惁鎴愬姛
+     */
+    Boolean updateModelInfo(ModelInfoVO info);
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\service\SelectService.java =====
+
+package seu.powersis.alert.service;
+
+import seu.powersis.alert.param.SelectQuery;
+import seu.powersis.alert.vo.OptionItemVO;
+import seu.powersis.alert.vo.SelectAllOptionVO;
+
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-16 22:44
+ */
+public interface SelectService {
+    /**
+     * 鑾峰彇鎵€鏈夌殑涓嬫媺妗嗛€夐」
+     *
+     * @return 涓嬫媺妗嗛€夐」
+     */
+    SelectAllOptionVO getAllOptions();
+
+    /**
+     * 鏍规嵁unit id鍜宼ype id鑾峰彇绯荤粺閫夐」
+     *
+     * @param query 鏌ヨ鍙傛暟
+     * @return 绯荤粺閫夐」
+     */
+    List<OptionItemVO> getSystemOptions(SelectQuery query);
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\BenchmarkHistoryVO.java =====
+
+package seu.powersis.alert.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
+/**
+ * @author Cascade
+ * @version 1.0
+ * @date 2025-12-24
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class BenchmarkHistoryVO {
+    private Date time;
+    private Double value;
+}
+
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\ModelDataVO.java =====
+
+package seu.powersis.alert.vo;
+
+import lombok.*;
+
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-09-05 22:50
+ */
+@Data
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class ModelDataVO {
+    /**
+     * 鐩爣鏁板€?     */
+    private List<Double> targetValue;
+    /**
+     * 鍙傛暟涓暟
+     */
+    private int[] sampleValue;
+    /**
+     * 杈圭晫鏁版嵁
+     */
+    private List<List<Double>> dataList;
+
+    /**
+     * 鐑姏鍥炬暟鎹?     */
+    private List<int[]> heatData;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\ModelInfoVO.java =====
+
+package seu.powersis.alert.vo;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 22:41
+ */
+@Data
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class ModelInfoVO {
+    /**
+     * id
+     */
+    private Integer id;
+    /**
+     * 鍒涘缓浜?     */
+    private String createName;
+
+    /**
+     * 鍒涘缓鏃堕棿
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
+
+    /**
+     * 杩愯鏉′欢
+     */
+    private String condition;
+
+    /**
+     * 鍚嶇О
+     */
+    private String modelName;
+
+    private List<Object> steadyPoint;
+    /**
+     * 婊戝姩绐楀弬鏁?     */
+    private MovingWindows movingWindows;
+
+    private PointVO targetParameter;
+
+    private List<PointVO> relationParameter;
+
+    private List<PointVO> boundaryParameter;
+
+
+    @Data
+    public static class MovingWindows {
+        private Integer windowLength;
+
+        private Integer samplingInterval;
+
+        private Integer movingSpeed;
+    }
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\ModelSimpleVO.java =====
+
+package seu.powersis.alert.vo;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
+
+import java.util.Date;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 13:08
+ */
+@Data
+@Builder
+@ToString
+@AllArgsConstructor
+public class ModelSimpleVO {
+    /**
+     * 妯″瀷id
+     */
+    private Integer id;
+    /**
+     * 妯″瀷鍚嶇О
+     */
+    private String name;
+    /**
+     * 绠楁硶鍚嶇О
+     */
+    private String algorithm;
+    /**
+     * 鍒涘缓浜?     */
+    private String creatName;
+
+    /**
+     * 妯″瀷鐘舵€?     */
+    private Integer status;
+    /**
+     * 鍒涘缓鏃堕棿
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date creatTime;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\OptimisticVO.java =====
+
+package seu.powersis.alert.vo;
+
+import lombok.*;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2024-07-16 22:17
+ */
+@Data
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class OptimisticVO {
+    private Integer modelId;
+    private String targetName;
+
+    private String boundaryName;
+
+    private String targetValue;
+
+    private String boundaryValue;
+
+    private String historyBest;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\OptionItemVO.java =====
+
+package seu.powersis.alert.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-16 22:39
+ */
+@Data
+@Builder
+@ToString
+@AllArgsConstructor
+public class OptionItemVO {
+    /**
+     * id
+     */
+    private Integer id;
+    /**
+     * 鍚嶇О
+     */
+    private String name;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\PointOptionItemVO.java =====
+
+package seu.powersis.alert.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-20 20:55
+ */
+@Data
+@Builder
+@ToString
+@AllArgsConstructor
+public class PointOptionItemVO {
+    private String id;
+
+    private String name;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\PointVO.java =====
+
+package seu.powersis.alert.vo;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
+
+import java.math.BigDecimal;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-19 22:48
+ */
+@Data
+@Builder
+@ToString
+@AllArgsConstructor
+public class PointVO {
+    /**
+     * 绯荤粺鍚嶇О
+     */
+    private String systemName;
+
+    /**
+     * 鐩爣鐐瑰彿
+     */
+    private String targetPoint;
+
+    /**
+     * 鎻忚堪
+     */
+    private String description;
+
+    /**
+     * 鍗曚綅
+     */
+    private String unit;
+
+    /**
+     * 绫诲瀷
+     */
+    private String marktype;
+
+    /**
+     * 涓婇檺
+     */
+    private BigDecimal upperlimit;
+
+    /**
+     * 涓嬮檺
+     */
+    private BigDecimal lowerlimit;
+
+    /**
+     * 缃戞牸鏁?     */
+    private Integer gridNumber;
+
+    private Float value;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\SelectAllOptionVO.java =====
+
+package seu.powersis.alert.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
+
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-16 22:38
+ */
+@Data
+@Builder
+@ToString
+@AllArgsConstructor
+public class SelectAllOptionVO {
+    /**
+     * 鏈虹粍閫夐」
+     */
+    private List<OptionItemVO> units;
+    /**
+     * 绯荤粺閫夐」
+     */
+    private List<OptionItemVO> types;
+    /**
+     * 瀛愮郴缁熼€夐」
+     */
+    private List<OptionItemVO> systems;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\TypeSysOptionVO.java =====
+
+package seu.powersis.alert.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
+
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-17 23:59
+ */
+@Data
+@Builder
+@ToString
+@AllArgsConstructor
+public class TypeSysOptionVO {
+    /**
+     * 绯荤粺閫夐」
+     */
+    private List<OptionItemVO> types;
+    /**
+     * 瀛愮郴缁熼€夐」
+     */
+    private List<OptionItemVO> systems;
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\vo\UserInfo.java =====
+
+package seu.powersis.alert.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * @author chenjiale
+ * @version 1.0
+ * @date 2023-08-14 22:52
+ */
+@Data
+@Builder
+@AllArgsConstructor
+public class UserInfo implements Serializable {
+    private Long userId;
+    private String username;
+    private String realName;
+    private String avatar;
+    private String desc;
+    private String password;
+    private String token;
+    private String homePath;
+    private List<Object> roles;
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\java\seu\powersis\alert\AlertApplication.java =====
+
+package seu.powersis.alert;
+
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * @author 闄堝皬榛? */
+@SpringBootApplication
+@MapperScan("seu.powersis.alert.dao.mapper")
+public class AlertApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AlertApplication.class, args);
+    }
+
+}
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\AlarmLevelCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.AlarmLevelCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.AlarmLevelCfg">
+            <result property="alarmLevel" column="ALARM_LEVEL" jdbcType="INTEGER"/>
+            <result property="alarmLevelName" column="ALARM_LEVEL_NAME" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ALARM_LEVEL,ALARM_LEVEL_NAME
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\AlarmTypeCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.AlarmTypeCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.AlarmTypeCfg">
+            <result property="unitId" column="UNIT_ID" jdbcType="INTEGER"/>
+            <result property="alarmTypeId" column="ALARM_TYPE_ID" jdbcType="INTEGER"/>
+            <result property="alarmName" column="ALARM_NAME" jdbcType="VARCHAR"/>
+            <result property="alarmThershold" column="ALARM_THERSHOLD" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        UNIT_ID,ALARM_TYPE_ID,ALARM_NAME,
+        ALARM_THERSHOLD
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\AlgorithmCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.AlgorithmCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.AlgorithmCfg">
+            <result property="algorithmId" column="Algorithm_ID" jdbcType="INTEGER"/>
+            <result property="algorithmName" column="Algorithm_Name" jdbcType="VARCHAR"/>
+            <result property="algorithmShortname" column="Algorithm_ShortName" jdbcType="VARCHAR"/>
+            <result property="path" column="Path" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Algorithm_ID,Algorithm_Name,Algorithm_ShortName,
+        Path
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\AreaCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.AreaCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.AreaCfg">
+            <result property="areaId" column="Area_id" jdbcType="INTEGER"/>
+            <result property="areaName" column="Area_Name" jdbcType="VARCHAR"/>
+            <result property="areaShortname" column="Area_ShortName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Area_id,Area_Name,Area_ShortName
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\BenchmarkHistoryMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.BenchmarkHistoryMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.BenchmarkHistory">
+        <result property="nno" column="Nno" jdbcType="INTEGER"/>
+        <result property="modelId" column="Model_ID" jdbcType="INTEGER"/>
+        <result property="bId" column="B_ID" jdbcType="VARCHAR"/>
+        <result property="b1Id" column="B1_ID" jdbcType="INTEGER"/>
+        <result property="b2Id" column="B2_ID" jdbcType="INTEGER"/>
+        <result property="b3Id" column="B3_ID" jdbcType="INTEGER"/>
+        <result property="b4Id" column="B4_ID" jdbcType="INTEGER"/>
+        <result property="b5Id" column="B5_ID" jdbcType="INTEGER"/>
+        <result property="b6Id" column="B6_ID" jdbcType="INTEGER"/>
+        <result property="b7Id" column="B7_ID" jdbcType="INTEGER"/>
+        <result property="b8Id" column="B8_ID" jdbcType="INTEGER"/>
+        <result property="b9Id" column="B9_ID" jdbcType="INTEGER"/>
+        <result property="b10Id" column="B10_ID" jdbcType="INTEGER"/>
+        <result property="starttime" column="StartTime" jdbcType="TIMESTAMP"/>
+        <result property="endtime" column="EndTime" jdbcType="TIMESTAMP"/>
+        <result property="samplenum" column="SampleNum" jdbcType="INTEGER"/>
+        <result property="type" column="Type" jdbcType="VARCHAR"/>
+        <result property="tflag" column="TFlag" jdbcType="VARCHAR"/>
+        <result property="targetvalue" column="TargetValue" jdbcType="FLOAT"/>
+        <result property="inserttime" column="InsertTime" jdbcType="TIMESTAMP"/>
+        <result property="b1" column="B1" jdbcType="FLOAT"/>
+        <result property="b2" column="B2" jdbcType="FLOAT"/>
+        <result property="b3" column="B3" jdbcType="FLOAT"/>
+        <result property="b4" column="B4" jdbcType="FLOAT"/>
+        <result property="b5" column="B5" jdbcType="FLOAT"/>
+        <result property="b6" column="B6" jdbcType="FLOAT"/>
+        <result property="b7" column="B7" jdbcType="FLOAT"/>
+        <result property="b8" column="B8" jdbcType="FLOAT"/>
+        <result property="b9" column="B9" jdbcType="FLOAT"/>
+        <result property="b10" column="B10" jdbcType="FLOAT"/>
+        <result property="r1" column="R1" jdbcType="FLOAT"/>
+        <result property="r2" column="R2" jdbcType="FLOAT"/>
+        <result property="r3" column="R3" jdbcType="FLOAT"/>
+        <result property="r4" column="R4" jdbcType="FLOAT"/>
+        <result property="r5" column="R5" jdbcType="FLOAT"/>
+        <result property="r6" column="R6" jdbcType="FLOAT"/>
+        <result property="r7" column="R7" jdbcType="FLOAT"/>
+        <result property="r8" column="R8" jdbcType="FLOAT"/>
+        <result property="r9" column="R9" jdbcType="FLOAT"/>
+        <result property="r10" column="R10" jdbcType="FLOAT"/>
+        <result property="r11" column="R11" jdbcType="FLOAT"/>
+        <result property="r12" column="R12" jdbcType="FLOAT"/>
+        <result property="r13" column="R13" jdbcType="FLOAT"/>
+        <result property="r14" column="R14" jdbcType="FLOAT"/>
+        <result property="r15" column="R15" jdbcType="FLOAT"/>
+        <result property="r16" column="R16" jdbcType="FLOAT"/>
+        <result property="r17" column="R17" jdbcType="FLOAT"/>
+        <result property="r18" column="R18" jdbcType="FLOAT"/>
+        <result property="r19" column="R19" jdbcType="FLOAT"/>
+        <result property="r20" column="R20" jdbcType="FLOAT"/>
+        <result property="r21" column="R21" jdbcType="FLOAT"/>
+        <result property="r22" column="R22" jdbcType="FLOAT"/>
+        <result property="r23" column="R23" jdbcType="FLOAT"/>
+        <result property="r24" column="R24" jdbcType="FLOAT"/>
+        <result property="r25" column="R25" jdbcType="FLOAT"/>
+        <result property="r26" column="R26" jdbcType="FLOAT"/>
+        <result property="r27" column="R27" jdbcType="FLOAT"/>
+        <result property="r28" column="R28" jdbcType="FLOAT"/>
+        <result property="r29" column="R29" jdbcType="FLOAT"/>
+        <result property="r30" column="R30" jdbcType="FLOAT"/>
+        <result property="r31" column="R31" jdbcType="FLOAT"/>
+        <result property="r32" column="R32" jdbcType="FLOAT"/>
+        <result property="r33" column="R33" jdbcType="FLOAT"/>
+        <result property="r34" column="R34" jdbcType="FLOAT"/>
+        <result property="r35" column="R35" jdbcType="FLOAT"/>
+        <result property="r36" column="R36" jdbcType="FLOAT"/>
+        <result property="r37" column="R37" jdbcType="FLOAT"/>
+        <result property="r38" column="R38" jdbcType="FLOAT"/>
+        <result property="r39" column="R39" jdbcType="FLOAT"/>
+        <result property="r40" column="R40" jdbcType="FLOAT"/>
+        <result property="r41" column="R41" jdbcType="FLOAT"/>
+        <result property="r42" column="R42" jdbcType="FLOAT"/>
+        <result property="r43" column="R43" jdbcType="FLOAT"/>
+        <result property="r44" column="R44" jdbcType="FLOAT"/>
+        <result property="r45" column="R45" jdbcType="FLOAT"/>
+        <result property="r46" column="R46" jdbcType="FLOAT"/>
+        <result property="r47" column="R47" jdbcType="FLOAT"/>
+        <result property="r48" column="R48" jdbcType="FLOAT"/>
+        <result property="r49" column="R49" jdbcType="FLOAT"/>
+        <result property="r50" column="R50" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Nno,Model_ID,B_ID,
+        B1_ID,B2_ID,B3_ID,
+        B4_ID,B5_ID,B6_ID,
+        B7_ID,B8_ID,B9_ID,
+        B10_ID,StartTime,EndTime,
+        SampleNum,Type,TFlag,
+        TargetValue,InsertTime,B1,
+        B2,B3,B4,
+        B5,B6,B7,
+        B8,B9,B10,
+        R1,R2,R3,
+        R4,R5,R6,
+        R7,R8,R9,
+        R10,R11,R12,
+        R13,R14,R15,
+        R16,R17,R18,
+        R19,R20,R21,
+        R22,R23,R24,
+        R25,R26,R27,
+        R28,R29,R30,
+        R31,R32,R33,
+        R34,R35,R36,
+        R37,R38,R39,
+        R40,R41,R42,
+        R43,R44,R45,
+        R46,R47,R48,
+        R49,R50
+    </sql>
+    <select id="getIndexValue" resultType="seu.powersis.alert.dao.dto.IndexValueDTO">
+        select
+        <foreach collection="indexList" item="index" separator="+'-'+">
+            b${index}_id
+        </foreach>
+        as data_index,
+        sum(SampleNum) as number
+        from benchmark_history
+        where model_id =${modelId}
+        <if test="type != null and type != ''">
+            and type = ${type}
+        </if>
+        group by
+        <foreach collection="indexList" item="index" separator=",">
+            b${index}_id
+        </foreach>
+    </select>
+
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\BenchmarkLogMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.BenchmarkLogMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.BenchmarkLog">
+            <result property="nno" column="Nno" jdbcType="INTEGER"/>
+            <result property="modelId" column="model_id" jdbcType="INTEGER"/>
+            <result property="calcLog" column="calc_log" jdbcType="VARCHAR"/>
+            <result property="insertTime" column="insert_time" jdbcType="TIMESTAMP"/>
+            <result property="samplenumber" column="SampleNumber" jdbcType="INTEGER"/>
+            <result property="timeComsumption" column="time_comsumption" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Nno,model_id,calc_log,
+        insert_time,SampleNumber,time_comsumption
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\HistoryMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.HistoryMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.History">
+            <result property="time" column="time" jdbcType="TIMESTAMP"/>
+            <result property="p1" column="P1" jdbcType="FLOAT"/>
+            <result property="p2" column="P2" jdbcType="FLOAT"/>
+            <result property="p3" column="P3" jdbcType="FLOAT"/>
+            <result property="p4" column="P4" jdbcType="FLOAT"/>
+            <result property="p5" column="P5" jdbcType="FLOAT"/>
+            <result property="p6" column="P6" jdbcType="FLOAT"/>
+            <result property="p7" column="P7" jdbcType="FLOAT"/>
+            <result property="p8" column="P8" jdbcType="FLOAT"/>
+            <result property="p9" column="P9" jdbcType="FLOAT"/>
+            <result property="p10" column="P10" jdbcType="FLOAT"/>
+            <result property="p11" column="P11" jdbcType="FLOAT"/>
+            <result property="p12" column="P12" jdbcType="FLOAT"/>
+            <result property="p13" column="P13" jdbcType="FLOAT"/>
+            <result property="p14" column="P14" jdbcType="FLOAT"/>
+            <result property="p15" column="P15" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        time,P1,P2,
+        P3,P4,P5,
+        P6,P7,P8,
+        P9,P10,P11,
+        P12,P13,P14,
+        P15
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\InstantCalcLogMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.InstantCalcLogMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.InstantCalcLog">
+            <result property="妯″瀷瀹炰緥璁＄畻鏁伴噺" column="妯″瀷瀹炰緥璁＄畻鏁伴噺" jdbcType="INTEGER"/>
+            <result property="杩愯鐘舵€? column="杩愯鐘舵€? jdbcType="VARCHAR"/>
+            <result property="鏃ュ織鎻掑叆鏃堕棿" column="鏃ュ織鎻掑叆鏃堕棿" jdbcType="TIMESTAMP"/>
+            <result property="璇诲彇閰嶇疆鑰楁椂" column="璇诲彇閰嶇疆鑰楁椂" jdbcType="FLOAT"/>
+            <result property="json瑙ｆ瀽1鑰楁椂" column="Json瑙ｆ瀽1鑰楁椂" jdbcType="FLOAT"/>
+            <result property="璇籩xa鑰楁椂" column="璇籈XA鑰楁椂" jdbcType="FLOAT"/>
+            <result property="璋僷ython妯″瀷璁＄畻" column="璋僷ython妯″瀷璁＄畻" jdbcType="FLOAT"/>
+            <result property="鍐檈xa鑰楁椂" column="鍐橢XA鑰楁椂" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        妯″瀷瀹炰緥璁＄畻鏁伴噺,杩愯鐘舵€?鏃ュ織鎻掑叆鏃堕棿,
+        璇诲彇閰嶇疆鑰楁椂,Json瑙ｆ瀽1鑰楁椂,璇籈XA鑰楁椂,
+        璋僷ython妯″瀷璁＄畻,鍐橢XA鑰楁椂
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\InstantCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.InstantCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.InstantCfg">
+            <result property="mpId" column="MP_ID" jdbcType="INTEGER"/>
+            <result property="modelId" column="MODEL_ID" jdbcType="INTEGER"/>
+            <result property="mpName" column="MP_NAME" jdbcType="VARCHAR"/>
+            <result property="instantInfo" column="INSTANT_INFO" jdbcType="VARCHAR"/>
+            <result property="interval" column="INTERVAL" jdbcType="INTEGER"/>
+            <result property="hisSto" column="HIS_STO" jdbcType="INTEGER"/>
+            <result property="visible" column="VISIBLE" jdbcType="INTEGER"/>
+            <result property="status" column="STATUS" jdbcType="INTEGER"/>
+            <result property="setupTime" column="SETUP_TIME" jdbcType="TIMESTAMP"/>
+            <result property="newestUpdateTime" column="NEWEST_UPDATE_TIME" jdbcType="VARCHAR"/>
+            <result property="running" column="RUNNING" jdbcType="CHAR"/>
+            <result property="runningLog" column="RUNNING_LOG" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        MP_ID,MODEL_ID,MP_NAME,
+        INSTANT_INFO,INTERVAL,HIS_STO,
+        VISIBLE,STATUS,SETUP_TIME,
+        NEWEST_UPDATE_TIME,RUNNING,RUNNING_LOG
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\ModelCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.ModelCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.ModelCfg">
+            <id property="modelId" column="Model_ID" jdbcType="INTEGER"/>
+            <result property="systemId" column="System_ID" jdbcType="INTEGER"/>
+            <result property="algorithmId" column="Algorithm_ID" jdbcType="INTEGER"/>
+            <result property="modelName" column="Model_Name" jdbcType="VARCHAR"/>
+            <result property="creatTime" column="Creat_Time" jdbcType="TIMESTAMP"/>
+            <result property="creatName" column="Creat_Name" jdbcType="VARCHAR"/>
+            <result property="modelInfo" column="Model_Info" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="visible" column="VISIBLE" jdbcType="INTEGER"/>
+            <result property="condition" column="Condition" jdbcType="VARCHAR"/>
+            <result property="trash" column="trash" jdbcType="INTEGER"/>
+            <result property="marktype" column="marktype" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Model_ID,System_ID,Algorithm_ID,
+        Model_Name,Creat_Time,Creat_Name,
+        Model_Info,status,VISIBLE,
+        Condition,trash,marktype
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\ModelConditionMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.ModelConditionMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.ModelCondition">
+            <result property="algorithm" column="algorithm" jdbcType="VARCHAR"/>
+            <result property="condition" column="condition" jdbcType="VARCHAR"/>
+            <result property="id" column="id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        algorithm,condition,id
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\ModelOrRuleCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.ModelOrRuleCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.ModelOrRuleCfg">
+            <result property="modelOrRule" column="MODEL_OR_RULE" jdbcType="INTEGER"/>
+            <result property="modelOrRuleName" column="MODEL_OR_RULE_NAME" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        MODEL_OR_RULE,MODEL_OR_RULE_NAME
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\ModelViewMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.ModelViewMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.ModelView">
+            <result property="modelId" column="Model_ID" jdbcType="INTEGER"/>
+            <result property="systemId" column="System_ID" jdbcType="INTEGER"/>
+            <result property="algorithmId" column="Algorithm_ID" jdbcType="INTEGER"/>
+            <result property="modelName" column="Model_Name" jdbcType="VARCHAR"/>
+            <result property="creatTime" column="Creat_Time" jdbcType="TIMESTAMP"/>
+            <result property="creatName" column="Creat_Name" jdbcType="VARCHAR"/>
+            <result property="modelInfo" column="Model_Info" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="systemTypeId" column="System_type_ID" jdbcType="INTEGER"/>
+            <result property="systemShortname" column="System_ShortName" jdbcType="VARCHAR"/>
+            <result property="systemName" column="System_Name" jdbcType="VARCHAR"/>
+            <result property="unitId" column="unit_id" jdbcType="INTEGER"/>
+            <result property="systemTypeName" column="System_type_name" jdbcType="VARCHAR"/>
+            <result property="systemTypeShortname" column="System_type_Shortname" jdbcType="VARCHAR"/>
+            <result property="plantId" column="Plant_ID" jdbcType="INTEGER"/>
+            <result property="unitName" column="Unit_Name" jdbcType="VARCHAR"/>
+            <result property="unitShortname" column="Unit_ShortName" jdbcType="VARCHAR"/>
+            <result property="areaName" column="Area_Name" jdbcType="VARCHAR"/>
+            <result property="areaShortname" column="Area_ShortName" jdbcType="VARCHAR"/>
+            <result property="plantName" column="Plant_Name" jdbcType="VARCHAR"/>
+            <result property="plantShortname" column="Plant_ShortName" jdbcType="VARCHAR"/>
+            <result property="areaId" column="Area_ID" jdbcType="INTEGER"/>
+            <result property="instantNum" column="instant_num" jdbcType="INTEGER"/>
+            <result property="visible" column="VISIBLE" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Model_ID,System_ID,Algorithm_ID,
+        Model_Name,Creat_Time,Creat_Name,
+        Model_Info,status,System_type_ID,
+        System_ShortName,System_Name,unit_id,
+        System_type_name,System_type_Shortname,Plant_ID,
+        Unit_Name,Unit_ShortName,Area_Name,
+        Area_ShortName,Plant_Name,Plant_ShortName,
+        Area_ID,instant_num,VISIBLE
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\PlantCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.PlantCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.PlantCfg">
+            <result property="plantId" column="Plant_ID" jdbcType="INTEGER"/>
+            <result property="areaId" column="Area_ID" jdbcType="INTEGER"/>
+            <result property="plantName" column="Plant_Name" jdbcType="VARCHAR"/>
+            <result property="plantShortname" column="Plant_ShortName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Plant_ID,Area_ID,Plant_Name,
+        Plant_ShortName
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\RecalcCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.RecalcCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.RecalcCfg">
+            <result property="nno" column="Nno" jdbcType="INTEGER"/>
+            <result property="modelId" column="model_id" jdbcType="INTEGER"/>
+            <result property="starttime" column="starttime" jdbcType="TIMESTAMP"/>
+            <result property="endtime" column="endtime" jdbcType="TIMESTAMP"/>
+            <result property="visible" column="visible" jdbcType="INTEGER"/>
+            <result property="process" column="process" jdbcType="FLOAT"/>
+            <result property="inserttime" column="inserttime" jdbcType="TIMESTAMP"/>
+            <result property="samplenumber" column="SampleNumber" jdbcType="INTEGER"/>
+            <result property="computetime" column="ComputeTime" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Nno,model_id,starttime,
+        endtime,visible,process,
+        inserttime,SampleNumber,ComputeTime
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\SystemCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.SystemCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.SystemCfg">
+            <result property="systemId" column="System_ID" jdbcType="INTEGER"/>
+            <result property="systemTypeId" column="System_type_ID" jdbcType="INTEGER"/>
+            <result property="systemName" column="System_Name" jdbcType="VARCHAR"/>
+            <result property="systemShortname" column="System_ShortName" jdbcType="VARCHAR"/>
+            <result property="unitId" column="unit_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        System_ID,System_type_ID,System_Name,
+        System_ShortName,unit_id
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\SystemTypeCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.SystemTypeCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.SystemTypeCfg">
+            <result property="systemTypeId" column="System_type_id" jdbcType="INTEGER"/>
+            <result property="systemTypeName" column="System_type_name" jdbcType="VARCHAR"/>
+            <result property="systemTypeShortname" column="System_type_Shortname" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        System_type_id,System_type_name,System_type_Shortname
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\TeachTestMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.TeachTestMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.TeachTest">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="age" column="age" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,age
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\mapper\UnitCfgMapper.xml =====
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seu.powersis.alert.dao.mapper.UnitCfgMapper">
+
+    <resultMap id="BaseResultMap" type="seu.powersis.alert.dao.entity.UnitCfg">
+            <result property="unitId" column="Unit_ID" jdbcType="INTEGER"/>
+            <result property="plantId" column="Plant_ID" jdbcType="INTEGER"/>
+            <result property="unitName" column="Unit_Name" jdbcType="VARCHAR"/>
+            <result property="unitShortname" column="Unit_ShortName" jdbcType="VARCHAR"/>
+            <result property="棰勮鏍囧噯璁粌鏍锋湰" column="棰勮鏍囧噯璁粌鏍锋湰" jdbcType="VARCHAR"/>
+            <result property="loadpoint" column="LoadPoint" jdbcType="VARCHAR"/>
+            <result property="temppoint" column="TempPoint" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Unit_ID,Plant_ID,Unit_Name,
+        Unit_ShortName,棰勮鏍囧噯璁粌鏍锋湰,LoadPoint,
+        TempPoint
+    </sql>
+</mapper>
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\application-common.yml =====
+
+server:
+  port: 8066
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  global-config:
+    db-config:
+      # 鍏ㄥ眬榛樿涓婚敭绫诲瀷
+      id-type: auto
+      table-underline: true
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    com.baomidou.mybatisplus: debug
+exa:
+  get-item-url: ${exa.host}/exawebapi/exaitem/getitems
+  get-values: ${exa.host}/exawebapi/exanow/GetFloatValueBatch
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\application-dev.yml =====
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://120.27.236.75;databaseName=benchmarking
+    username: sa
+    password: powerSIS#123
+exa:
+  host: 120.27.236.75:9000
+algorithm:
+  host: 120.27.236.75:8089
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\application-prod.yml =====
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://192.168.101.2;databaseName=benchmarking
+    username: sa
+    password: powerSIS#123
+exa:
+  host: 192.168.101.1:9000
+algorithm:
+  host: 127.0.0.1:8089
+
+===== FILE: D:\现场\bench-platform-back-main\src\main\resources\application.yml =====
+
+spring:
+  profiles:
+    include: common,dev

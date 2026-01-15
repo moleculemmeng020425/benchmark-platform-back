@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://120.27.236.75;databaseName=benchmarking
+    username: sa
+    password: powerSIS#123
+exa:
+  host: http://120.27.236.75:9000
+  get-raw-array-float: http://120.27.236.75:9000/exawebapi/exaitem/GetRawValueArrayFloat
+  get-history: http://120.27.236.75:9000/exawebapi/exatime/GetRawValueArrayFloat
+
+algorithm:
+  host: 120.27.236.75:8089
+
+
