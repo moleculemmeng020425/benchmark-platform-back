@@ -229,6 +229,69 @@ public class ExaServiceImpl implements ExaService {
         }
     }
 
+    @Override
+    public List<Map<String, Object>> getSinglePointHistory(
+            String pointName,
+            String st,
+            String et,
+            Integer stepSeconds
+    ) {
+        return getHistory(pointName, null, st, et, stepSeconds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMultiPointsHistory(
+            List<String> pointNames,
+            String st,
+            String et,
+            Integer stepSeconds
+    ) {
+        if (pointNames == null || pointNames.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // 获取每个测点的历史数据
+        List<List<Map<String, Object>>> allPointsData = new ArrayList<>();
+        for (String pointName : pointNames) {
+            List<Map<String, Object>> pointHistory = getSinglePointHistory(pointName, st, et, stepSeconds);
+            allPointsData.add(pointHistory);
+        }
+
+        // 如果没有数据，返回空列表
+        if (allPointsData.isEmpty() || allPointsData.get(0).isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // 按时间对齐各测点的数据
+        List<Map<String, Object>> firstPointData = allPointsData.get(0);
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        for (int i = 0; i < firstPointData.size(); i++) {
+            Map<String, Object> row = new HashMap<>();
+            String time = (String) firstPointData.get(i).get("time");
+            row.put("time", time);
+
+            // 收集该时间点所有测点的值
+            List<Double> values = new ArrayList<>();
+            for (int j = 0; j < pointNames.size(); j++) {
+                List<Map<String, Object>> pointData = allPointsData.get(j);
+                if (i < pointData.size()) {
+                    Object val = pointData.get(i).get("value");
+                    if (val != null) {
+                        values.add(((Number) val).doubleValue());
+                    } else {
+                        values.add(null);
+                    }
+                } else {
+                    values.add(null);
+                }
+            }
+            row.put("values", values);
+            result.add(row);
+        }
+        return result;
+    }
+
     private static long toEpochMillis(String s) {
         if (s == null) return 0L;
         String t = s.trim();

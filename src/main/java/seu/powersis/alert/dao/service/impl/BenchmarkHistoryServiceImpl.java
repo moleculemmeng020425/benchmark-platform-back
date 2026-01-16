@@ -71,7 +71,3 @@ public class BenchmarkHistoryServiceImpl extends ServiceImpl<BenchmarkHistoryMap
         return record != null ? record.getTargetvalue() : null;
     }
 }
-
-
-
-

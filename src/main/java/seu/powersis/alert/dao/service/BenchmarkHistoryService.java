@@ -26,9 +26,9 @@ public interface BenchmarkHistoryService extends IService<BenchmarkHistory> {
     /**
      * 根据 B_ID 和类型获取最优值
      * @param modelId 模型ID
-     * @param bId 工况编号（如 B-3-9）
-     * @param type 数据类型（min/max）
-     * @return 最优值，如果不存在返回 null
+     * @param bId 工况编号（如 "B-3-9"）
+     * @param type 数据类型（min/max/avg）
+     * @return 最优值，如果没有找到则返回 null
      */
     Double getOptimalValueByBId(Integer modelId, String bId, String type);
 }
