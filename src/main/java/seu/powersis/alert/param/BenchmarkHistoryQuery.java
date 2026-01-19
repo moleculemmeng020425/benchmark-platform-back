@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Cascade
@@ -19,5 +20,11 @@ public class BenchmarkHistoryQuery {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date et;
+
+    /**
+     * 边界参数值列表，以逗号分隔的字符串形式传入
+     * 例如："10.5,20.3,30.1"
+     */
+    private String boundaryValues;
 }
 
